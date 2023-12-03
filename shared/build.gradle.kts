@@ -6,9 +6,14 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.pluginGraphql)
 }
 
-
+apollo {
+    service("service") {
+        packageName.set("com.cesarwilly")
+    }
+}
 kotlin {
     androidTarget {
         compilations.all {
@@ -66,6 +71,8 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.kamel.image)
+            implementation(libs.apolloCache)
+            implementation(libs.apolloRuntime)
             api(libs.mvvm.core)
             api(libs.mvvm.compose)
             api(libs.lighthousegames.logging)
