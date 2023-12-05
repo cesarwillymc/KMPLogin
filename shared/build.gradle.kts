@@ -42,6 +42,7 @@ kotlin {
         framework {
             baseName = "shared"
             isStatic = true
+            export(libs.decompose)
         }
     }
 
@@ -62,9 +63,9 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.material3)
             implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.voyager.navigator)
-            implementation(libs.voyager.androidx)
-            implementation(libs.voyager.koin)
+            implementation(libs.decompose)
+            implementation(libs.decompose.jetbrains)
+            implementation(libs.kotlinx.serialization.json)
             implementation(libs.koin.core)
             implementation(libs.koin.test)
             implementation(libs.ktor.client.core)
@@ -73,8 +74,8 @@ kotlin {
             implementation(libs.kamel.image)
             implementation(libs.apolloCache)
             implementation(libs.apolloRuntime)
-            api(libs.mvvm.core)
-            api(libs.mvvm.compose)
+//            api(libs.mvvm.core)
+//            api(libs.mvvm.compose)
             api(libs.lighthousegames.logging)
         }
     }
@@ -82,7 +83,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.cesarwillymc.kmplogin"
+    namespace = libs.versions.android.namespace.get()
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -90,7 +91,7 @@ android {
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
     defaultConfig {
-        applicationId = "com.cesarwillymc.kmplogin"
+        applicationId = libs.versions.android.id.get()
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
