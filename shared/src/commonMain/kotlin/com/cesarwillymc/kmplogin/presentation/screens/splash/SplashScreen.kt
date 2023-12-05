@@ -1,6 +1,5 @@
 package com.cesarwillymc.kmplogin.presentation.screens.splash
 
-import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -45,7 +44,7 @@ fun SplashScreen(
     val offsetState = remember { androidx.compose.animation.core.Animatable(0f) }
     val alphaState = remember { androidx.compose.animation.core.Animatable(1f) }
     val responsive = rememberResponsive()
-    val route by splashViewModel.startDestination.collectAsState()
+    val navigateHome by splashViewModel.navigateHome.collectAsState()
     LaunchedEffect(true) {
         launch {
             offsetState.animateTo(
@@ -65,8 +64,10 @@ fun SplashScreen(
             )
         }
         delay(DELAY_2500)
-        if (!route.isNullOrBlank()) {
-            navigateTo(route.orEmpty())
+        if (navigateHome ==true){
+            event.navigateToHome()
+        }else{
+            event.navigateToSignIn()
         }
     }
 

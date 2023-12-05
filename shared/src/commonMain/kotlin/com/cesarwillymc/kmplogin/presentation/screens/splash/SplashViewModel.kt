@@ -1,18 +1,12 @@
 package com.cesarwillymc.kmplogin.presentation.screens.splash
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.cesarwillymc.kmplogin.domain.usecase.auth.GetLoggedStateUseCase
-import com.cesarwillymc.kmplogin.presentation.navigation.route.AuthRoute
-import com.cesarwillymc.kmplogin.presentation.navigation.route.MainRoute
+import com.cesarwillymc.kmplogin.presentation.utils.viewModel.ViewModel
 import com.cesarwillymc.kmplogin.util.extension.orEmpty
-import com.cesarwillymc.kmplogin.util.state.dataOrNull
-import com.cesarwillymc.kmplogin.util.state.isSuccess
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.koin.core.component.KoinComponent
 
 /**
  * Created by Cesar Canaza on 11/15/23.
@@ -20,23 +14,23 @@ import javax.inject.Inject
  *
  * IOWA, United States.
  */
-@HiltViewModel
-class SplashViewModel @Inject constructor(private val isLogged: GetLoggedStateUseCase) :
-    ViewModel() {
-    private val _startDestination = MutableStateFlow<String?>(null)
-    val startDestination get() = _startDestination
+
+class SplashViewModel  constructor(private val isLogged: GetLoggedStateUseCase) :
+    ViewModel(), KoinComponent {
+    private val _navigateHome = MutableStateFlow<Boolean?>(null)
+    val navigateHome get() = _navigateHome
 
     init {
-        loadMainRoute()
+        loadFirstRoute()
     }
 
-    fun loadMainRoute() {
+    fun loadFirstRoute() {
         viewModelScope.launch {
             isLogged(Unit).let { result ->
-                if (result.isSuccess && result.dataOrNull().orEmpty()) {
-                    _startDestination.update { MainRoute.Main.path }
+                if (result.isSuccess && result.getOrNull().orEmpty()) {
+                    _navigateHome.update { true }
                 } else {
-                    _startDestination.update { AuthRoute.Auth.path }
+                    _navigateHome.update { false }
                 }
             }
         }

@@ -6,6 +6,7 @@ import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.coroutineScope
 
 /**
  * Created by Cesar Canaza on 12/4/23.
@@ -16,4 +17,6 @@ import kotlinx.coroutines.cancel
 actual open class ViewModel : InstanceKeeper.Instance, CoroutineScope {
     actual override val coroutineContext: CoroutineContext = AndroidUiDispatcher.Main + SupervisorJob()
     override fun onDestroy() { coroutineContext.cancel() }
+    actual val viewModelScope: CoroutineScope
+        get() = CoroutineScope(coroutineContext)
 }

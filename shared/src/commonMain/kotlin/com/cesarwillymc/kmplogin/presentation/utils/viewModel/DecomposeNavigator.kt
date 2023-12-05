@@ -21,25 +21,3 @@ import kotlin.reflect.KClass
  */
 val LocalComponentContext: ProvidableCompositionLocal<ComponentContext> =
     staticCompositionLocalOf { error("Root component context was not provided") }
-
-@Composable
-internal fun <C : Parcelable> rememberChildStack(
-    type: KClass<C>,
-    source: StackNavigationSource<C>,
-    initialStack: () -> List<C>,
-    key: String = "DefaultChildStack",
-    handleBackButton: Boolean = false,
-): State<ChildStack<C, ComponentContext>> {
-    val componentContext = LocalComponentContext.current
-
-    return remember {
-        componentContext.childStack(
-            source = source,
-            initialStack = initialStack,
-            configurationClass = type,
-            key = key,
-            handleBackButton = handleBackButton,
-            childFactory = { _, childComponentContext -> childComponentContext },
-        )
-    }.subscribeAsState()
-}

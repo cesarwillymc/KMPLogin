@@ -12,4 +12,5 @@ import kotlinx.coroutines.CoroutineScope
  */
 expect open class ViewModel() : InstanceKeeper.Instance, CoroutineScope {
     override val coroutineContext: CoroutineContext
+    val viewModelScope: CoroutineScope
 }

@@ -1,17 +1,13 @@
 package com.cesarwillymc.kmplogin.presentation.screens.auth.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.cesarwillymc.kmplogin.domain.usecase.auth.ForgotUseCase
 import com.cesarwillymc.kmplogin.presentation.screens.auth.state.AuthUiState
+import com.cesarwillymc.kmplogin.presentation.utils.viewModel.ViewModel
 import com.cesarwillymc.kmplogin.presentation.validations.field.EmailField
-import com.cesarwillymc.kmplogin.util.state.isError
-import com.cesarwillymc.kmplogin.util.state.isSuccess
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.koin.core.component.KoinComponent
 
 /**
  * Created by Cesar Canaza on 10/10/23.
@@ -19,10 +15,9 @@ import javax.inject.Inject
  *
  * IOWA, United States.
  */
-@HiltViewModel
-class ForgotViewModel @Inject constructor(
+class ForgotViewModel (
     private val forgotUseCase: ForgotUseCase
-) : ViewModel() {
+) : ViewModel(), KoinComponent {
     val emailText = EmailField()
     val authUiState get() = _authUiState
     private val _authUiState = MutableStateFlow(AuthUiState())
@@ -32,7 +27,7 @@ class ForgotViewModel @Inject constructor(
             forgotUseCase(emailText.text.value).let { result ->
                 authUiState.update {
                     AuthUiState(
-                        isError = result.isError,
+                        isError = result.isFailure,
                         isSuccess = result.isSuccess
                     )
                 }

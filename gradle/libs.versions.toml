@@ -42,15 +42,20 @@ lightHouseGamesLogger = "1.3.0"
 
 kotlinSerialization = "1.6.0"
 
+dateTime ="0.4.1"
+
 [libraries]
 kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamelImage" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinCore" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCore" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koinTest" }
+date-time = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "dateTime" }
+
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+compose-graphics = { module = "androidx.compose.ui:ui-graphics", version.ref = "compose" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }

@@ -59,12 +59,12 @@ class RootComponent(componentContext: ComponentContext) : ComponentContext by co
         }
     }
 
-    sealed class Child {
-        data class Splash(val component: SplashComponent) : Child()
-        data class SignIn(val component: SignInComponent) : Child()
-        data class ForgotPassword(val component: ForgotPasswordComponent) : Child()
-        data class Home(val component: HomeComponent) : Child()
-        data class Detail(val component: DetailComponent) : Child()
+    sealed class Child(val componentContext: ComponentContext) {
+        data class Splash(val component: SplashComponent) : Child(component)
+        data class SignIn(val component: SignInComponent) : Child(component)
+        data class ForgotPassword(val component: ForgotPasswordComponent) : Child(component)
+        data class Home(val component: HomeComponent) : Child(component)
+        data class Detail(val component: DetailComponent) : Child(component)
     }
 
     @Serializable

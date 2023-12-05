@@ -1,21 +1,15 @@
 package com.cesarwillymc.kmplogin.presentation.screens.auth.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.cesarwillymc.kmplogin.data.settings.network.util.error.ErrorSource
 import com.cesarwillymc.kmplogin.domain.usecase.auth.SignInUseCase
 import com.cesarwillymc.kmplogin.domain.usecase.auth.entities.AuthParams
 import com.cesarwillymc.kmplogin.presentation.screens.auth.state.AuthUiState
+import com.cesarwillymc.kmplogin.presentation.utils.viewModel.ViewModel
 import com.cesarwillymc.kmplogin.presentation.validations.field.EmailField
 import com.cesarwillymc.kmplogin.presentation.validations.field.PasswordField
-import com.cesarwillymc.kmplogin.util.state.getError
-import com.cesarwillymc.kmplogin.util.state.isError
-import com.cesarwillymc.kmplogin.util.state.isSuccess
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.koin.core.component.KoinComponent
 
 /**
  * Created by Cesar Canaza on 10/10/23.
@@ -23,10 +17,10 @@ import javax.inject.Inject
  *
  * IOWA, United States.
  */
-@HiltViewModel
-class LoginViewModel @Inject constructor(
+
+class LoginViewModel (
     private val signInUseCase: SignInUseCase
-) : ViewModel() {
+) : ViewModel(), KoinComponent {
     val emailText = EmailField()
     val passwordText = PasswordField()
 
@@ -46,11 +40,9 @@ class LoginViewModel @Inject constructor(
                         authUiState.update { AuthUiState(isSuccess = true) }
                     }
 
-                    result.isError -> {
-                        var messageError: String? = result.getError().message
-                        if (result.getError() is ErrorSource.ServiceError) {
-                            messageError = (result.getError() as ErrorSource.ServiceError).errorMessage
-                        }
+                    result.isFailure -> {
+                        val messageError: String? = result.exceptionOrNull()?.message
+
                         authUiState.update {
                             AuthUiState(
                                 isError = true,
