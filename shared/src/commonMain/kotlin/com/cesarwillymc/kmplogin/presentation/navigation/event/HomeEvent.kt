@@ -10,4 +10,5 @@ import com.cesarwillymc.kmplogin.domain.usecase.survey.entities.SurveyItem
  */
  interface HomeEvent {
    fun navigateToDetail(surveyItem: SurveyItem)
+    fun navigateToSignIn()
  }

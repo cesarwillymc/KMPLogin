@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -26,17 +27,18 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.cesarwillymc.kmplogin.R
+import com.cesarwillymc.kmplogin.SharedRes
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 fun CustomLottieMessage(
-    @RawRes lottie: Int,
+    lottieCompose:@Composable ()->Unit,
     title: String,
     message: String,
     modifier: Modifier = Modifier,
     onClickRetry: () -> Unit = {},
     showRetryButton: Boolean = false
 ) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(lottie))
 
     Box(modifier = modifier.fillMaxSize().statusBarsPadding()) {
         Column(
@@ -46,12 +48,8 @@ fun CustomLottieMessage(
                 dimensionResource(id = R.dimen.Normal100)
             )
         ) {
-            LottieAnimation(
-                composition,
-                iterations = LottieConstants.IterateForever,
-                modifier = Modifier.size(dimensionResource(id = R.dimen.ImageSemiLarge))
-            )
-            HorizontalDivider(modifier = Modifier.padding(dimensionResource(id = R.dimen.Normal100)))
+            lottieCompose()
+            Divider(modifier = Modifier.padding(dimensionResource(id = R.dimen.Normal100)))
             Text(text = title, style = MaterialTheme.typography.titleLarge)
             Text(
                 text = message,
@@ -65,12 +63,12 @@ fun CustomLottieMessage(
                 TextButton(
                     onClick = onClickRetry,
                     border = BorderStroke(
-                        dimensionResource(id = R.dimen.OneDp),
+                        dimensionResource(id = SharedRes.dimen.OneDp),
                         MaterialTheme.colorScheme.surface
                     )
                 ) {
                     Text(
-                        stringResource(id = R.string.til_try_again),
+                        stringResource(id = SharedRes.strings.til_try_again),
                         style = MaterialTheme.typography.titleMedium
                     )
                 }

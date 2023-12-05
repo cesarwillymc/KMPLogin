@@ -44,6 +44,9 @@ kotlinSerialization = "1.6.0"
 
 dateTime ="0.4.1"
 
+lottie = "4.2.0"
+moko = "0.23.0"
+mokoGraphics ="0.9.0"
 [libraries]
 kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamelImage" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinCore" }
@@ -85,6 +88,10 @@ apolloCache = { module = "com.apollographql.apollo3:apollo-normalized-cache", ve
 decompose-jetbrains = { module = "com.arkivanov.decompose:extensions-compose-jetbrains", version.ref = "decomposeExp" }
 decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
 kotlinx-serialization-json ={module="org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref ="kotlinSerialization"}
+android-lottie = {module="com.airbnb.android:lottie-compose", version.ref="lottie"}
+moko-compose = {module="dev.icerock.moko:resources-compose",version.ref="moko"}
+moko-resources = {module="dev.icerock.moko:resources",version.ref="moko"}
+moko-graphics = {module="dev.icerock.moko:graphics",version.ref="mokoGraphics"}
 [plugins]
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -94,3 +101,4 @@ kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", versio
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 pluginGraphql = { id = "com.apollographql.apollo3", version.ref = "apollo" }
+#mokoPlugin = { id = "dev.icerock.moko:resources-generator", version.ref = "moko" }

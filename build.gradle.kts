@@ -7,15 +7,10 @@ plugins {
     alias(libs.plugins.kotlinCocoapods).apply(false)
     alias(libs.plugins.jetbrainsCompose) apply false
     alias(libs.plugins.pluginGraphql).apply(false)
+
 }
-
-allprojects {
-    configurations {
-        all {
-            resolutionStrategy {
-//                force("org.jetbrains.kotlinx:kotlinx-coroutines-core:x.y.z-native-mt")
-
-            }
-        }
+buildscript{
+    dependencies{
+        classpath("dev.icerock.moko:resources-generator:0.23.0")
     }
 }

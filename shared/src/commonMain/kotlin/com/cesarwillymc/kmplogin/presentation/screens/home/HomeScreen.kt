@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(
     event: HomeEvent,
-    homeViewModel: HomeViewModel= hiltViewModel()
+    homeViewModel: HomeViewModel
 ) {
     val homeUiState by homeViewModel.homeUiState.collectAsState()
     val authUiState by homeViewModel.authUiState.collectAsState()
@@ -66,7 +66,7 @@ fun HomeScreen(
                 homeUiState.isSuccess -> homeUiState.data?.let {
                     HomeContent(
                         surveyList = it,
-                        navigateToDetail = navigateToDetail,
+                        navigateToDetail = event::navigateToDetail,
                         openDrawer = {
                             scope.launch {
                                 drawerState.open()
@@ -82,7 +82,7 @@ fun HomeScreen(
     CustomFullScreenLoading(authUiState.isLoading)
     LaunchedEffect(authUiState) {
         if (authUiState.isSuccess) {
-            navigateToAuth()
+            event.navigateToSignIn()
         }
     }
 }

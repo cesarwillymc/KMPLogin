@@ -15,14 +15,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cesarwillymc.kmplogin.R
 import com.cesarwillymc.kmplogin.presentation.navigation.event.SplashEvent
+import com.cesarwillymc.kmplogin.presentation.utils.animations.OvershootInterpolatorFactory
+import com.cesarwillymc.kmplogin.presentation.utils.rememberResponsive
 import com.cesarwillymc.kmplogin.util.constants.DELAY_2500
 import com.cesarwillymc.kmplogin.util.constants.DELAY_3000
 import com.cesarwillymc.kmplogin.util.constants.FRACTION_20
+import com.cesarwillymc.kmplogin.util.constants.ONE_F
 import com.cesarwillymc.kmplogin.util.constants.TWO_F
 import com.cesarwillymc.kmplogin.util.constants.ZERO
 import com.cesarwillymc.kmplogin.util.constants.ZERO_F
@@ -39,10 +43,11 @@ import kotlinx.coroutines.launch
 @Composable
 fun SplashScreen(
     event: SplashEvent,
-    splashViewModel: SplashViewModel = hiltViewModel()
+    splashViewModel: SplashViewModel
 ) {
-    val offsetState = remember { androidx.compose.animation.core.Animatable(0f) }
-    val alphaState = remember { androidx.compose.animation.core.Animatable(1f) }
+    val offsetState = remember { androidx.compose.animation.core.Animatable(ZERO_F) }
+    val alphaState = remember { androidx.compose.animation.core.Animatable(ONE_F) }
+    LocalViewConfiguration.current.minimumTouchTargetSize
     val responsive = rememberResponsive()
     val navigateHome by splashViewModel.navigateHome.collectAsState()
     LaunchedEffect(true) {
@@ -52,7 +57,7 @@ fun SplashScreen(
                 animationSpec = tween(
                     durationMillis = DELAY_3000,
                     easing = {
-                        OvershootInterpolator(TWO_F).getInterpolation(it)
+                        OvershootInterpolatorFactory(TWO_F).getInterpolation(it)
                     }
                 )
             )

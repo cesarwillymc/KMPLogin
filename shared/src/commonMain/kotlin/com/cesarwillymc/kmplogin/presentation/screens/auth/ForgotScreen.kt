@@ -29,7 +29,7 @@ fun ForgotScreen(
     event: ForgotPasswordEvent,
     forgotViewModel: ForgotViewModel= koinViewModel()
 ) {
-    koin
+
     val authUiState by forgotViewModel.authUiState.collectAsState()
     val emailField = forgotViewModel.emailText
     val snackbarHostState = remember { SnackbarHostState() }

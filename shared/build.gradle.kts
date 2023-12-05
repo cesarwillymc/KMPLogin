@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.pluginGraphql)
+    id("dev.icerock.mobile.multiplatform-resources")
 }
 
 apollo {
@@ -30,6 +31,8 @@ kotlin {
         it.binaries.framework {
             baseName = "shared"
             isStatic = true
+            export(libs.moko.resources)
+            export(libs.moko.graphics)
         }
     }
 
@@ -43,6 +46,7 @@ kotlin {
             baseName = "shared"
             isStatic = true
             export(libs.decompose)
+
         }
     }
 
@@ -55,6 +59,7 @@ kotlin {
             implementation(libs.ktor.client.android)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.kotlinx.coroutines.android)
+            implementation(libs.android.lottie)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -77,6 +82,7 @@ kotlin {
             implementation(libs.apolloCache)
             implementation(libs.apolloRuntime)
             implementation(libs.date.time)
+            implementation(libs.moko.compose)
 //            api(libs.mvvm.core)
 //            api(libs.mvvm.compose)
             api(libs.lighthousegames.logging)
@@ -126,4 +132,8 @@ android {
 }
 dependencies {
     implementation(libs.androidx.material3)
+}
+multiplatformResources {
+    multiplatformResourcesPackage = libs.versions.android.namespace.get() // required
+    multiplatformResourcesClassName = "SharedRes" // optional, default MR
 }
