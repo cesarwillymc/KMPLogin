@@ -18,16 +18,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import com.cesarwillymc.kmplogin.R
+import com.cesarwillymc.kmplogin.SharedRes
+import com.cesarwillymc.kmplogin.presentation.theme.DimensionManager
+import com.cesarwillymc.kmplogin.presentation.theme.PaddingType
 import com.cesarwillymc.kmplogin.presentation.theme.TextColor
 import com.cesarwillymc.kmplogin.presentation.theme.Typography
-import com.cesarwillymc.kmplogin.util.extension.formatDateWithSimpleDateFormat
-import java.util.Date
+import com.cesarwillymc.kmplogin.presentation.theme.getPadding
+import com.cesarwillymc.kmplogin.presentation.utils.DateFormat
+import com.cesarwillymc.kmplogin.util.constants.PATTERN_DAY_MONTH_DAY
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 /**
  * Created by Cesar Canaza on 10/10/23.
@@ -41,24 +45,26 @@ fun ProfileCard(openDrawer: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .statusBarsPadding()
-            .padding(top = dimensionResource(id = R.dimen.Normal100))
-            .padding(horizontal = dimensionResource(id = R.dimen.Normal100)),
+            .padding(top = DimensionManager.getPadding(PaddingType.Medium))
+            .padding(horizontal = DimensionManager.getPadding(PaddingType.Medium)),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Column(verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.Normal100))) {
+        Column(verticalArrangement = Arrangement.spacedBy(DimensionManager.getPadding(PaddingType.Medium))) {
             Text(
-                text = formatDateWithSimpleDateFormat(Date()).uppercase(),
+                text = DateFormat(PATTERN_DAY_MONTH_DAY).format(
+                    Clock.System.now().toLocalDateTime(TimeZone.UTC)
+                ).uppercase(),
                 style = Typography.bodyMedium.copy(fontWeight = FontWeight.ExtraBold),
                 color = TextColor
             )
             Text(
-                text = stringResource(R.string.lbl_today).uppercase(),
+                text = stringResource(SharedRes.strings.lbl_today).uppercase(),
                 style = Typography.titleLarge,
                 color = TextColor
             )
         }
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.Small100)))
+        Spacer(modifier = Modifier.size(DimensionManager.getPadding(PaddingType.Small)))
 
         Box(
             modifier = Modifier
@@ -66,17 +72,11 @@ fun ProfileCard(openDrawer: () -> Unit) {
                 .clickable(onClick = openDrawer)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.profile),
-                contentDescription = stringResource(R.string.lbl_profile),
-                modifier = Modifier.size(dimensionResource(id = R.dimen.Large125)),
+                painter = painterResource(SharedRes.images.profile),
+                contentDescription = stringResource(SharedRes.strings.lbl_profile),
+                modifier = Modifier.size(DimensionManager.getPadding(PaddingType.Large)),
                 contentScale = ContentScale.Crop
             )
         }
     }
-}
-
-@Composable
-@Preview(name = "Light Theme", showBackground = true)
-fun ProfileCardPreview() {
-    ProfileCard {}
 }

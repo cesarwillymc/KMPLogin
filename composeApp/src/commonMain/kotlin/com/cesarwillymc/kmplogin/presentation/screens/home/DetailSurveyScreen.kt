@@ -1,6 +1,5 @@
 package com.cesarwillymc.kmplogin.presentation.screens.home
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,18 +17,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import coil.compose.rememberImagePainter
-import com.cesarwillymc.kmplogin.R
-import com.cesarwillymc.kmplogin.presentation.screens.home.viewmodel.DetailSurveyViewModel
+import com.cesarwillymc.kmplogin.SharedRes
 import com.cesarwillymc.kmplogin.presentation.composables.CustomPrimaryButton
 import com.cesarwillymc.kmplogin.presentation.navigation.event.DetailEvent
+import com.cesarwillymc.kmplogin.presentation.screens.auth.viewmodel.LoginViewModel
+import com.cesarwillymc.kmplogin.presentation.screens.home.viewmodel.DetailSurveyViewModel
+import com.cesarwillymc.kmplogin.presentation.theme.DimensionManager
+import com.cesarwillymc.kmplogin.presentation.theme.PaddingType
 import com.cesarwillymc.kmplogin.presentation.theme.TextColor
 import com.cesarwillymc.kmplogin.presentation.theme.TextColorOpacity
 import com.cesarwillymc.kmplogin.presentation.theme.Typography
+import com.cesarwillymc.kmplogin.presentation.theme.getPadding
+import com.cesarwillymc.kmplogin.presentation.utils.viewModel.rememberViewModel
 import com.cesarwillymc.kmplogin.util.constants.FRACTION_30
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 
 /**
  * Created by Cesar Canaza on 10/10/23.
@@ -39,9 +43,11 @@ import com.cesarwillymc.kmplogin.util.constants.FRACTION_30
  */
 @Composable
 fun DetailSurveyScreen(
-    event: DetailEvent,
-    detailSurveyViewModel: DetailSurveyViewModel= hiltViewModel()
+    event: DetailEvent
 ) {
+    val detailSurveyViewModel = rememberViewModel(DetailSurveyViewModel::class){
+        DetailSurveyViewModel()
+    }
     val detailSurveyUiState by detailSurveyViewModel.detailUiState.collectAsState()
     Scaffold { paddingValues ->
         val data = detailSurveyUiState.data
@@ -51,8 +57,8 @@ fun DetailSurveyScreen(
                     .fillMaxSize()
                     .background(color = Color.Black)
             ) {
-                Image(
-                    painter = rememberImagePainter(data = data.coverImageUrl),
+                KamelImage(
+                    asyncPainterResource(data = data.coverImageUrl),
                     contentDescription = "ImageCover",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
@@ -67,14 +73,20 @@ fun DetailSurveyScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
-                    .padding(dimensionResource(id = R.dimen.Normal100))
+                    .padding(DimensionManager.getPadding(PaddingType.Medium))
             ) {
-                Column(verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.Normal100))) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(
+                        DimensionManager.getPadding(
+                            PaddingType.Medium
+                        )
+                    )
+                ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_arrow_back),
-                        contentDescription = stringResource(id = R.string.desc_back),
+                        painter = painterResource(SharedRes.images.arrow_ios_back),
+                        contentDescription = stringResource(SharedRes.strings.desc_back),
                         modifier = Modifier
-                            .clickable(onClick = navigateUp),
+                            .clickable(onClick = event::onBack),
                         tint = Color.White
                     )
                     Text(text = data.title, style = Typography.titleMedium, color = TextColor)
@@ -86,7 +98,7 @@ fun DetailSurveyScreen(
                     )
                 }
                 CustomPrimaryButton(
-                    title = stringResource(R.string.lbl_start_survey),
+                    title = stringResource(SharedRes.strings.lbl_start_survey),
                     modifier = Modifier.align(Alignment.BottomEnd)
 
                 ) {

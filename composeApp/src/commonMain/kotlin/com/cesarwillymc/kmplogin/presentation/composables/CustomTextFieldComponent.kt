@@ -2,8 +2,9 @@ package com.cesarwillymc.kmplogin.presentation.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,18 +24,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalTextInputService
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
-import com.cesarwillymc.kmplogin.R
+import androidx.compose.ui.unit.dp
+import com.cesarwillymc.kmplogin.presentation.theme.DimensionManager
+import com.cesarwillymc.kmplogin.presentation.theme.PaddingType
 import com.cesarwillymc.kmplogin.presentation.theme.TextColor
-import com.cesarwillymc.kmplogin.presentation.theme.TextColorOpacity
+import com.cesarwillymc.kmplogin.presentation.theme.getPadding
 import com.cesarwillymc.kmplogin.util.constants.EMPTY_STRING
 import com.cesarwillymc.kmplogin.util.constants.FRACTION_30
 import com.cesarwillymc.kmplogin.util.constants.ONE
@@ -47,44 +45,41 @@ import com.cesarwillymc.kmplogin.util.constants.ONE
  */
 
 /** TextFieldValue control the cursor position **/
-@SuppressWarnings("LongMethod", "ComplexMethod", "ComplexCondition")
 @Composable
 fun CustomTextField(
     query: String,
     onQueryChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    onGoClicked: () -> Unit = {},
     hintText: String = EMPTY_STRING,
-    isTypePassword: Boolean = false,
     isError: Boolean = false,
     keyboardType: KeyboardType = KeyboardType.Text,
     enableAnimationHint: Boolean = false,
-    trailingComposable: (@Composable () -> Unit)? = null
+    trailingComposable: (@Composable () -> Unit)? = null,
+    isTypePassword: Boolean = false,
 ) {
     var isFocused by remember { mutableStateOf(false) }
     val keyboardController = LocalTextInputService.current
-    var isHideText by remember { mutableStateOf(true) }
 
     BasicTextField(
         value = query,
         modifier = modifier
             .fillMaxWidth()
-            .height(dimensionResource(id = R.dimen.Large175))
+            .height(DimensionManager.getPadding(PaddingType.Large))
             .onFocusChanged {
                 isFocused = it.isFocused
             }
             .background(
                 MaterialTheme.colorScheme.background.copy(alpha = FRACTION_30),
-                shape = RoundedCornerShape(dimensionResource(id = R.dimen.Small150))
+                shape = RoundedCornerShape(DimensionManager.getPadding(PaddingType.Small))
             )
             .border(
-                width = dimensionResource(id = R.dimen.OneDp),
+                width = ONE.dp,
                 color = when {
                     query.isNotBlank() && !isError -> Color.Transparent
                     query.isBlank() -> Color.Transparent
                     else -> Color.Red
                 },
-                RoundedCornerShape(dimensionResource(id = R.dimen.Small150))
+                RoundedCornerShape(DimensionManager.getPadding(PaddingType.Small))
             ),
         onValueChange = onQueryChange,
         textStyle = MaterialTheme.typography.bodyMedium.copy(color = TextColor),
@@ -96,37 +91,21 @@ fun CustomTextField(
         keyboardActions = KeyboardActions(
             onGo = {
                 keyboardController?.hideSoftwareKeyboard()
-                onGoClicked()
             }
         ),
-        visualTransformation = if (isHideText && isTypePassword) {
+        visualTransformation = if (isTypePassword) {
             PasswordVisualTransformation()
         } else {
             VisualTransformation.None
         },
         decorationBox = { innerTextField ->
-            ConstraintLayout {
-                val (lblText, trailingIcon) = createRefs()
+            Row(horizontalArrangement = Arrangement.SpaceBetween) {
                 Box(
-                    modifier = Modifier
-                        .constrainAs(lblText) {
-                            top.linkTo(parent.top)
-                            bottom.linkTo(parent.bottom)
-                            start.linkTo(parent.start)
-                            end.linkTo(
-                                if (isTypePassword) {
-                                    trailingIcon.start
-                                } else {
-                                    parent.end
-                                }
-                            )
-                            width = Dimension.fillToConstraints
-                            height = Dimension.fillToConstraints
-                        }
+                    modifier = Modifier,
                 ) {
                     Box(
                         modifier = Modifier
-                            .padding(dimensionResource(id = R.dimen.Small100))
+                            .padding(DimensionManager.getPadding(PaddingType.Small))
                             .align(
                                 Alignment.CenterStart
                             )
@@ -150,60 +129,13 @@ fun CustomTextField(
                                         Alignment.CenterStart
                                     }
                                 )
-                                .padding(start = dimensionResource(id = R.dimen.Small100)),
+                                .padding(start = DimensionManager.getPadding(PaddingType.Small)),
                             color = TextColor
                         )
                     }
                 }
-
-                if (isTypePassword && (trailingComposable == null)) {
-                    Text(
-                        text = if (isHideText) {
-                            stringResource(R.string.lbl_view)
-                        } else {
-                            stringResource(R.string.lbl_hide)
-                        },
-                        modifier = Modifier
-                            .constrainAs(trailingIcon) {
-                                top.linkTo(parent.top)
-                                bottom.linkTo(parent.bottom)
-                                end.linkTo(
-                                    parent.end
-                                )
-                            }
-                            .padding(end = dimensionResource(id = R.dimen.Small150))
-                            .clickable {
-                                isHideText = !isHideText
-                            },
-                        color = TextColorOpacity
-                    )
-                } else {
-                    Box(
-                        modifier = Modifier
-                            .constrainAs(trailingIcon) {
-                                top.linkTo(parent.top)
-                                bottom.linkTo(parent.bottom)
-                                end.linkTo(
-                                    parent.end
-                                )
-                            }
-                            .padding(end = dimensionResource(id = R.dimen.Small150))
-                    ) {
-                        trailingComposable?.let { it() }
-                    }
-                }
+                trailingComposable?.let { it() }
             }
         }
-    )
-}
-
-@Composable
-@Preview(name = "Light Theme", showBackground = true)
-fun CustomSearchViewComponentPreview() {
-    CustomTextField(
-        query = "hola",
-        onQueryChange = {},
-        onGoClicked = {},
-        isTypePassword = false
     )
 }

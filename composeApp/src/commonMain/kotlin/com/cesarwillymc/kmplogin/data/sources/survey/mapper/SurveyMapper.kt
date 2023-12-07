@@ -1,6 +1,6 @@
 package com.cesarwillymc.kmplogin.data.sources.survey.mapper
 
-import com.cesarwillymc.GetSurveysQuery
+import com.cesarwilly.GetSurveysQuery
 import com.cesarwillymc.kmplogin.domain.usecase.survey.entities.SurveyList
 
 /**

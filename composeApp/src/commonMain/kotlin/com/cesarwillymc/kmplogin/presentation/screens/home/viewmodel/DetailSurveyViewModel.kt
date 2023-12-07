@@ -15,9 +15,10 @@ import org.koin.core.component.KoinComponent
  */
 
 class DetailSurveyViewModel : ViewModel(), KoinComponent {
+    /** Variables */
     val detailUiState get() = _detailUiState
     private val _detailUiState = MutableStateFlow(DetailSurveyUiState())
-
+    /** Behaviors */
     private fun onLoadArgument(survey: SurveyItem) {
         _detailUiState.update { update -> update.copy(data = survey) }
     }

@@ -12,5 +12,8 @@ expect object LottieHandler {
     @Composable
     fun loadingFile()
 
+    @Composable
+    fun errorFile()
+
 
 }

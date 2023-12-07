@@ -1,6 +1,7 @@
 package com.cesarwillymc.kmplogin.presentation.screens.home.viewmodel
 
 import com.cesarwillymc.kmplogin.domain.usecase.auth.LogoutUseCase
+import com.cesarwillymc.kmplogin.domain.usecase.auth.SignInUseCase
 import com.cesarwillymc.kmplogin.domain.usecase.survey.GetSurveysUseCase
 import com.cesarwillymc.kmplogin.presentation.screens.auth.state.AuthUiState
 import com.cesarwillymc.kmplogin.presentation.screens.home.state.HomeUiState
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
 /**
  * Created by Cesar Canaza on 10/10/23.
@@ -19,10 +21,12 @@ import org.koin.core.component.KoinComponent
  * IOWA, United States.
  */
 
-class HomeViewModel(
-    private val logoutUseCase: LogoutUseCase,
-    private val getSurveys: GetSurveysUseCase
-) : ViewModel(), KoinComponent {
+class HomeViewModel: ViewModel(), KoinComponent {
+    /** Dependency injection */
+    private val logoutUseCase = get<LogoutUseCase>()
+    private val getSurveys = get<GetSurveysUseCase>()
+
+    /** Variables */
     val authUiState get() = _authUiState
     private val _authUiState = MutableStateFlow(AuthUiState())
     val homeUiState get() = _homeUiState
@@ -31,6 +35,7 @@ class HomeViewModel(
     init {
         onLoadSurveys()
     }
+    /** Behaviors */
     fun onLoadSurveys() {
         _homeUiState.update { HomeUiState(isLoading = true) }
         viewModelScope.launch {

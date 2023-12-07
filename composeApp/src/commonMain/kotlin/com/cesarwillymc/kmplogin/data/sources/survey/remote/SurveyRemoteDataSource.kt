@@ -1,7 +1,6 @@
 package com.cesarwillymc.kmplogin.data.sources.survey.remote
 
-import com.cesarwillymc.GetSurveysQuery
-import com.cesarwillymc.kmplogin.util.state.Result
+import com.cesarwilly.GetSurveysQuery
 
 /**
  * Created by Cesar Canaza on 11/16/23.

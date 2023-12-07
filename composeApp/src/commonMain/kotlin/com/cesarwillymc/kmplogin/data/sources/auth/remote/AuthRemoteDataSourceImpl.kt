@@ -7,8 +7,6 @@ import com.cesarwillymc.kmplogin.data.sources.auth.entities.ForgotPasswordReques
 import com.cesarwillymc.kmplogin.data.sources.auth.entities.LogoutRequest
 import com.cesarwillymc.kmplogin.data.sources.auth.entities.RefreshTokenRequest
 import com.cesarwillymc.kmplogin.data.sources.auth.service.AuthService
-import com.cesarwillymc.kmplogin.util.state.Result
-import javax.inject.Inject
 
 /**
  * Created by Cesar Canaza on 11/15/23.
@@ -16,7 +14,7 @@ import javax.inject.Inject
  *
  * IOWA, United States.
  */
-class AuthRemoteDataSourceImpl @Inject constructor(
+class AuthRemoteDataSourceImpl (
     private val authService: AuthService
 ) : AuthRemoteDataSource,
     BaseRemoteDataSource() {

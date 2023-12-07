@@ -8,11 +8,9 @@ import com.cesarwillymc.kmplogin.data.sources.auth.entities.RefreshTokenRequest
 import com.cesarwillymc.kmplogin.data.sources.auth.mapper.AuthResultMapper
 import com.cesarwillymc.kmplogin.data.sources.auth.remote.AuthRemoteDataSource
 import com.cesarwillymc.kmplogin.data.sources.preferences.PreferencesDao
+import com.cesarwillymc.kmplogin.domain.repository.AuthRepository
 import com.cesarwillymc.kmplogin.domain.usecase.auth.entities.Auth
-import com.cesarwillymc.kmplogin.util.state.Result
 import com.cesarwillymc.kmplogin.util.state.dataOrNull
-import com.cesarwillymc.kmplogin.util.state.isSuccess
-import com.cesarwillymc.kmplogin.util.state.map
 import javax.inject.Inject
 
 /**
@@ -21,11 +19,11 @@ import javax.inject.Inject
  *
  * IOWA, United States.
  */
-class AuthRepository @Inject constructor(
+class AuthRepositoryImpl @Inject constructor(
     private val remoteDataSource: AuthRemoteDataSource,
     private val resultMapper: AuthResultMapper,
     private val sharedDao: PreferencesDao
-) : AuthDataSource {
+) : AuthRepository {
     override suspend fun signIn(email: String, password: String): Result<Auth> {
         return remoteDataSource.signIn(AuthRequest(email, password))
             .map(resultMapper::fromResponseToDomain).also {

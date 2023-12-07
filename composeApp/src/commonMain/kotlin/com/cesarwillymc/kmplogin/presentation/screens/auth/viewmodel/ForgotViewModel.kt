@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
 /**
  * Created by Cesar Canaza on 10/10/23.
@@ -15,12 +16,16 @@ import org.koin.core.component.KoinComponent
  *
  * IOWA, United States.
  */
-class ForgotViewModel (
-    private val forgotUseCase: ForgotUseCase
-) : ViewModel(), KoinComponent {
+class ForgotViewModel  : ViewModel(), KoinComponent {
+    /** Dependency injection */
+    private val forgotUseCase = get<ForgotUseCase>()
+
+    /** Variables */
     val emailText = EmailField()
     val authUiState get() = _authUiState
     private val _authUiState = MutableStateFlow(AuthUiState())
+
+    /** Behaviors */
     fun forgotPassword() {
         authUiState.update { AuthUiState(isLoading = true) }
         viewModelScope.launch {

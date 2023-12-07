@@ -1,9 +1,9 @@
 package com.cesarwillymc.kmplogin.data.sources.survey.mapper
 
-import com.cesarwillymc.GetSurveysQuery
+import com.cesarwilly.GetSurveysQuery
 import com.cesarwillymc.kmplogin.domain.usecase.survey.entities.SurveyItem
 import com.cesarwillymc.kmplogin.domain.usecase.survey.entities.SurveyList
-import javax.inject.Inject
+
 
 /**
  * Created by Cesar Canaza on 11/16/23.
@@ -11,7 +11,7 @@ import javax.inject.Inject
  *
  * IOWA, United States.
  */
-class SurveyMapperImpl @Inject constructor() : SurveyMapper {
+class SurveyMapperImpl : SurveyMapper {
     override fun dataSurveyToDomain(data: GetSurveysQuery.Data?): SurveyList {
         return data?.surveys?.let {
             SurveyList(

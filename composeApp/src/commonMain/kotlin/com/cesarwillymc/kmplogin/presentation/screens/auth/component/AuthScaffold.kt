@@ -18,13 +18,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import com.cesarwillymc.kmplogin.R
+import com.cesarwillymc.kmplogin.SharedRes
+import com.cesarwillymc.kmplogin.presentation.theme.DimensionManager
+import com.cesarwillymc.kmplogin.presentation.theme.PaddingType
+import com.cesarwillymc.kmplogin.presentation.theme.getPadding
+import com.cesarwillymc.kmplogin.presentation.utils.rememberResponsive
 import com.cesarwillymc.kmplogin.util.constants.FRACTION_20
-import com.cesarwillymc.kmplogin.util.extension.rememberResponsive
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
 
 /**
  * Created by Cesar Canaza on 10/10/23.
@@ -41,22 +42,23 @@ fun AuthScaffold(
 ) {
     val responsive = rememberResponsive()
     Scaffold { paddingValues ->
+
         Image(
-            painter = painterResource(id = R.drawable.img_overlay),
-            contentDescription = stringResource(R.string.lbl_onbackground),
+            painter = painterResource(SharedRes.images.img_overlay),
+            contentDescription = stringResource(SharedRes.strings.lbl_onbackground),
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
         Box(
             modifier = Modifier
                 .padding(paddingValues = paddingValues)
-                .padding(dimensionResource(id = R.dimen.Normal100))
+                .padding( DimensionManager.getPadding(PaddingType.Medium))
                 .fillMaxSize()
         ) {
             if (isIconsTopEnabled) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_back),
-                    contentDescription = stringResource(id = R.string.desc_back),
+                    painter = painterResource(SharedRes.images.arrow_ios_back),
+                    contentDescription = stringResource(SharedRes.strings.desc_back),
                     modifier = Modifier
                         .clickable(onClick = onNavigateUp)
                         .align(Alignment.TopStart),
@@ -67,13 +69,13 @@ fun AuthScaffold(
                 }
             }
 
-            Column(verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.Normal100))) {
+            Column(verticalArrangement = Arrangement.spacedBy( DimensionManager.getPadding(PaddingType.Medium))) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_logo),
+                        painter = painterResource(SharedRes.images.logo),
                         contentDescription = "Icon logo",
                         modifier = Modifier.align(Alignment.Center).padding(
                             top = responsive.heightR(
@@ -82,19 +84,10 @@ fun AuthScaffold(
                         )
                     )
                 }
-                Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.Large100)))
+                Spacer(modifier = Modifier.size(DimensionManager.getPadding(PaddingType.Large)))
                 content()
             }
         }
     }
 }
 
-@Composable
-@Preview(name = "Light Theme", showBackground = true)
-fun AuthScaffoldPreview() {
-    AuthScaffold(
-        isIconsTopEnabled = true,
-        content = {
-        }
-    )
-}

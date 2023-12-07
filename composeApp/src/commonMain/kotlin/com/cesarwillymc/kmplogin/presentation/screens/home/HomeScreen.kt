@@ -12,16 +12,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import com.cesarwillymc.kmplogin.R
+import com.cesarwillymc.kmplogin.SharedRes
+import com.cesarwillymc.kmplogin.presentation.composables.CustomFullScreenLoading
+import com.cesarwillymc.kmplogin.presentation.composables.CustomLottieMessage
+import com.cesarwillymc.kmplogin.presentation.navigation.event.HomeEvent
 import com.cesarwillymc.kmplogin.presentation.screens.home.component.HomeContent
 import com.cesarwillymc.kmplogin.presentation.screens.home.component.HomeContentLoading
 import com.cesarwillymc.kmplogin.presentation.screens.home.component.HomeDrawerContent
 import com.cesarwillymc.kmplogin.presentation.screens.home.viewmodel.HomeViewModel
-import com.cesarwillymc.kmplogin.presentation.composables.CustomFullScreenLoading
-import com.cesarwillymc.kmplogin.presentation.composables.CustomLottieMessage
-import com.cesarwillymc.kmplogin.presentation.navigation.event.HomeEvent
 import com.cesarwillymc.kmplogin.presentation.theme.BackgroundColor
+import com.cesarwillymc.kmplogin.presentation.utils.lottie.LottieHandler
+import com.cesarwillymc.kmplogin.presentation.utils.viewModel.rememberViewModel
+import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.coroutines.launch
 
 /**
@@ -32,9 +34,11 @@ import kotlinx.coroutines.launch
  */
 @Composable
 fun HomeScreen(
-    event: HomeEvent,
-    homeViewModel: HomeViewModel
+    event: HomeEvent
 ) {
+    val homeViewModel = rememberViewModel(HomeViewModel::class){
+        HomeViewModel()
+    }
     val homeUiState by homeViewModel.homeUiState.collectAsState()
     val authUiState by homeViewModel.authUiState.collectAsState()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -56,11 +60,11 @@ fun HomeScreen(
         ) {
             when {
                 homeUiState.isError -> CustomLottieMessage(
-                    lottie = R.raw.animation_error,
+                    lottieCompose = { LottieHandler.errorFile() },
                     title = stringResource(
-                        id = R.string.lbl_error
+                        SharedRes.strings.lbl_error
                     ),
-                    message = stringResource(id = R.string.desc_error)
+                    message = stringResource(SharedRes.strings.desc_error)
                 )
 
                 homeUiState.isSuccess -> homeUiState.data?.let {

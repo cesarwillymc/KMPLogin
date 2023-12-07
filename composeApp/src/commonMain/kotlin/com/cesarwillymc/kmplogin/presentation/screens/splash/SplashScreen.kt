@@ -16,14 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalViewConfiguration
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.cesarwillymc.kmplogin.R
 import com.cesarwillymc.kmplogin.SharedRes
 import com.cesarwillymc.kmplogin.presentation.navigation.event.SplashEvent
+import com.cesarwillymc.kmplogin.presentation.screens.home.viewmodel.HomeViewModel
 import com.cesarwillymc.kmplogin.presentation.utils.animations.OvershootInterpolatorFactory
 import com.cesarwillymc.kmplogin.presentation.utils.rememberResponsive
+import com.cesarwillymc.kmplogin.presentation.utils.viewModel.rememberViewModel
 import com.cesarwillymc.kmplogin.util.constants.DELAY_2500
 import com.cesarwillymc.kmplogin.util.constants.DELAY_3000
 import com.cesarwillymc.kmplogin.util.constants.FRACTION_20
@@ -31,10 +30,9 @@ import com.cesarwillymc.kmplogin.util.constants.ONE_F
 import com.cesarwillymc.kmplogin.util.constants.TWO_F
 import com.cesarwillymc.kmplogin.util.constants.ZERO
 import com.cesarwillymc.kmplogin.util.constants.ZERO_F
-import com.cesarwillymc.kmplogin.util.extension.rememberResponsive
+import dev.icerock.moko.resources.compose.painterResource
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.painterResource
 
 /**
  * Created by Cesar Canaza on 11/15/23.
@@ -44,9 +42,11 @@ import org.jetbrains.compose.resources.painterResource
  */
 @Composable
 fun SplashScreen(
-    event: SplashEvent,
-    splashViewModel: SplashViewModel
+    event: SplashEvent
 ) {
+    val splashViewModel = rememberViewModel(SplashViewModel::class){
+        SplashViewModel()
+    }
     val offsetState = remember { androidx.compose.animation.core.Animatable(ZERO_F) }
     val alphaState = remember { androidx.compose.animation.core.Animatable(ONE_F) }
     LocalViewConfiguration.current.minimumTouchTargetSize
@@ -71,9 +71,9 @@ fun SplashScreen(
             )
         }
         delay(DELAY_2500)
-        if (navigateHome ==true){
+        if (navigateHome == true) {
             event.navigateToHome()
-        }else{
+        } else {
             event.navigateToSignIn()
         }
     }
@@ -82,16 +82,15 @@ fun SplashScreen(
         contentAlignment = Alignment.Center,
         modifier = Modifier.fillMaxWidth()
     ) {
-        SharedRes.images
         Image(
-            painter = painterResource(MR.images.img_background),
+            painterResource(SharedRes.images.img_backgroud),
             contentDescription = "Image Logo",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillBounds
         )
 
         Image(
-            painter = painterResource(id = R.drawable.ic_logo),
+            painterResource(SharedRes.images.logo),
             contentDescription = "Image Logo",
             modifier = Modifier
                 .offset(y = offsetState.value.dp, x = ZERO.dp)

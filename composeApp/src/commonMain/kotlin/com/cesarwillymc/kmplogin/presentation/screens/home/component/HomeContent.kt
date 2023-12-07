@@ -1,7 +1,6 @@
 package com.cesarwillymc.kmplogin.presentation.screens.home.component
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,12 +12,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.dimensionResource
-import coil.compose.rememberImagePainter
-import com.cesarwillymc.kmplogin.R
 import com.cesarwillymc.kmplogin.domain.usecase.survey.entities.SurveyItem
 import com.cesarwillymc.kmplogin.domain.usecase.survey.entities.SurveyList
+import com.cesarwillymc.kmplogin.presentation.theme.DimensionManager
+import com.cesarwillymc.kmplogin.presentation.theme.PaddingType
+import com.cesarwillymc.kmplogin.presentation.theme.getPadding
 import com.cesarwillymc.kmplogin.util.constants.FRACTION_30
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 
 /**
  * Created by Cesar Canaza on 11/16/23.
@@ -50,8 +51,8 @@ fun HomeContent(
                     .fillMaxSize()
                     .background(color = Color.Black)
             ) {
-                Image(
-                    painter = rememberImagePainter(data = surveyList.list[page].coverImageUrl),
+                KamelImage(
+                    asyncPainterResource(surveyList.list[page].coverImageUrl),
                     contentDescription = "ImageCover",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
@@ -71,7 +72,7 @@ fun HomeContent(
                 .align(
                     Alignment.BottomStart
                 )
-                .padding(dimensionResource(id = R.dimen.Normal100)),
+                .padding( DimensionManager.getPadding(PaddingType.Medium)),
             navigateDetail = navigateToDetail
         )
         ProfileCard(openDrawer = openDrawer)

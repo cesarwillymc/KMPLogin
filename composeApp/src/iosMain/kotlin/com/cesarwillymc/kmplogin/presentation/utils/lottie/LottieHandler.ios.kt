@@ -12,4 +12,7 @@ actual object LottieHandler {
     @Composable
     actual fun loadingFile() {
     }
+    @Composable
+    actual fun errorFile() {
+    }
 }

@@ -5,7 +5,6 @@ import com.cesarwillymc.kmplogin.data.sources.auth.entities.AuthResponse
 import com.cesarwillymc.kmplogin.data.sources.auth.entities.ForgotPasswordRequest
 import com.cesarwillymc.kmplogin.data.sources.auth.entities.LogoutRequest
 import com.cesarwillymc.kmplogin.data.sources.auth.entities.RefreshTokenRequest
-import com.cesarwillymc.kmplogin.util.state.Result
 
 /**
  * Created by Cesar Canaza on 11/15/23.

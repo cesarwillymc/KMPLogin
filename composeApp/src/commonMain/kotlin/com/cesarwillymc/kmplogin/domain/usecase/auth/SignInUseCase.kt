@@ -1,13 +1,10 @@
 package com.cesarwillymc.kmplogin.domain.usecase.auth
 
-import com.cesarwillymc.kmplogin.data.sources.auth.AuthDataSource
-import com.cesarwillymc.kmplogin.di.IoDispatcher
+import com.cesarwillymc.kmplogin.domain.repository.AuthRepository
 import com.cesarwillymc.kmplogin.domain.base.SuspendUseCase
 import com.cesarwillymc.kmplogin.domain.usecase.auth.entities.Auth
 import com.cesarwillymc.kmplogin.domain.usecase.auth.entities.AuthParams
-import com.cesarwillymc.kmplogin.util.state.Result
 import kotlinx.coroutines.CoroutineDispatcher
-import javax.inject.Inject
 
 /**
  * Created by Cesar Canaza on 11/15/23.
@@ -15,9 +12,9 @@ import javax.inject.Inject
  *
  * IOWA, United States.
  */
-class SignInUseCase @Inject constructor(
-    private val repository: AuthDataSource,
-    @IoDispatcher dispatcher: CoroutineDispatcher
+class SignInUseCase (
+    private val repository: AuthRepository,
+    dispatcher: CoroutineDispatcher
 ) : SuspendUseCase<AuthParams, Auth>(
     dispatcher
 ) {

@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import com.valentinilk.shimmer.shimmer
 
 /**
  * Created by Cesar Canaza on 11/16/23.

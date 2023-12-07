@@ -18,14 +18,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
-import com.cesarwillymc.kmplogin.R
+import androidx.compose.ui.unit.dp
+import com.cesarwillymc.kmplogin.SharedRes
 import com.cesarwillymc.kmplogin.domain.usecase.survey.entities.SurveyItem
+import com.cesarwillymc.kmplogin.presentation.theme.DimensionManager
+import com.cesarwillymc.kmplogin.presentation.theme.PaddingType
 import com.cesarwillymc.kmplogin.presentation.theme.TextColor
 import com.cesarwillymc.kmplogin.presentation.theme.TextColorOpacity
 import com.cesarwillymc.kmplogin.presentation.theme.Typography
+import com.cesarwillymc.kmplogin.presentation.theme.getPadding
+import com.cesarwillymc.kmplogin.util.constants.FIVE
 import com.cesarwillymc.kmplogin.util.constants.FRACTION_90
+import dev.icerock.moko.resources.compose.painterResource
 
 /**
  * Created by Cesar Canaza on 11/16/23.
@@ -42,14 +46,14 @@ fun SurveyContentPager(
     navigateDetail: (SurveyItem) -> Unit
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.Normal100)),
+        verticalArrangement = Arrangement.spacedBy( DimensionManager.getPadding(PaddingType.Medium)),
         modifier = modifier
     ) {
         Row(
             Modifier
                 .wrapContentHeight()
                 .fillMaxWidth()
-                .padding(bottom = dimensionResource(id = R.dimen.Small100)),
+                .padding(bottom = DimensionManager.getPadding(PaddingType.Small)),
             horizontalArrangement = Arrangement.Start
         ) {
             repeat(totalItems) { iteration ->
@@ -57,10 +61,10 @@ fun SurveyContentPager(
                     if (currentItem == iteration) Color.White else Color.Gray.copy(alpha = FRACTION_90)
                 Box(
                     modifier = Modifier
-                        .padding(dimensionResource(id = R.dimen.FiveDp))
+                        .padding(FIVE.dp)
                         .clip(CircleShape)
                         .background(color)
-                        .size(dimensionResource(id = R.dimen.Small150))
+                        .size(DimensionManager.getPadding(PaddingType.Large))
                 )
             }
         }
@@ -76,13 +80,13 @@ fun SurveyContentPager(
                 color = TextColorOpacity
             )
             Image(
-                painter = painterResource(id = R.drawable.action),
+                painter = painterResource(SharedRes.images.arrow_ios_forward),
                 contentDescription = "Icon go detail survey",
                 modifier = Modifier
                     .clickable {
                         navigateDetail(surveyItem)
                     }
-                    .padding(bottom = dimensionResource(id = R.dimen.Normal100))
+                    .padding(bottom =  DimensionManager.getPadding(PaddingType.Medium))
             )
         }
     }

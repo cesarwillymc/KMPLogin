@@ -1,7 +1,6 @@
-package com.cesarwillymc.kmplogin.data.sources.auth
+package com.cesarwillymc.kmplogin.domain.repository
 
 import com.cesarwillymc.kmplogin.domain.usecase.auth.entities.Auth
-import com.cesarwillymc.kmplogin.util.state.Result
 
 /**
  * Created by Cesar Canaza on 11/15/23.
@@ -9,7 +8,7 @@ import com.cesarwillymc.kmplogin.util.state.Result
  *
  * IOWA, United States.
  */
-interface AuthDataSource {
+interface AuthRepository {
     suspend fun signIn(
         email: String,
         password: String

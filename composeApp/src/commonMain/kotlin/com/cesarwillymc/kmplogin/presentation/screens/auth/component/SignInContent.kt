@@ -8,15 +8,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import com.cesarwillymc.kmplogin.R
+import com.cesarwillymc.kmplogin.SharedRes
 import com.cesarwillymc.kmplogin.presentation.composables.CustomPrimaryButton
 import com.cesarwillymc.kmplogin.presentation.composables.CustomTextField
+import com.cesarwillymc.kmplogin.presentation.theme.DimensionManager
+import com.cesarwillymc.kmplogin.presentation.theme.PaddingType
 import com.cesarwillymc.kmplogin.presentation.theme.TextColorOpacity
+import com.cesarwillymc.kmplogin.presentation.theme.getPadding
 import com.cesarwillymc.kmplogin.presentation.validations.field.EmailField
 import com.cesarwillymc.kmplogin.presentation.validations.field.PasswordField
+import dev.icerock.moko.resources.compose.stringResource
 
 /**
  * Created by Cesar Canaza on 10/10/23.
@@ -38,20 +39,20 @@ fun ColumnScope.SignInContent(
     CustomTextField(
         query = emailText.text.collectAsState().value,
         onQueryChange = emailText::setText,
-        hintText = stringResource(R.string.lbl_email),
+        hintText = stringResource(SharedRes.strings.lbl_email),
         isError = isErrorEmail
     )
     CustomTextField(
         query = passwordField.text.collectAsState().value,
         onQueryChange = passwordField::setText,
-        hintText = stringResource(R.string.lbl_password),
+        hintText = stringResource(SharedRes.strings.lbl_password),
         isTypePassword = true,
         isError = isErrorPassword,
         trailingComposable = {
             Text(
-                text = stringResource(R.string.lbl_forgot),
+                text = stringResource(SharedRes.strings.lbl_forgot),
                 modifier = Modifier
-                    .padding(end = dimensionResource(id = R.dimen.Small150))
+                    .padding(end = DimensionManager.getPadding(PaddingType.Small))
                     .clickable {
                         onClickForgotPassword()
                     },
@@ -60,19 +61,8 @@ fun ColumnScope.SignInContent(
         }
     )
     CustomPrimaryButton(
-        title = stringResource(R.string.til_sign_in),
+        title = stringResource(SharedRes.strings.til_sign_in),
         onClick = onContinue,
         isEnabled = !(isErrorPassword || isErrorEmail)
-    )
-}
-
-@Composable
-@Preview(name = "Light Theme", showBackground = true)
-fun SignInContentPreview() {
-    AuthScaffold(
-        isIconsTopEnabled = true,
-        content = {
-            SignInContent(PasswordField(), EmailField(), {}, {})
-        }
     )
 }

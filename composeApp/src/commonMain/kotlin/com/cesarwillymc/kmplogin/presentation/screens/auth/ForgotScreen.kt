@@ -7,16 +7,15 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
-import com.cesarwillymc.kmplogin.R
-import com.cesarwillymc.kmplogin.presentation.screens.auth.component.AuthScaffold
-import com.cesarwillymc.kmplogin.presentation.screens.auth.component.ForgotContent
-import com.cesarwillymc.kmplogin.presentation.screens.auth.viewmodel.ForgotViewModel
+import com.cesarwillymc.kmplogin.SharedRes
 import com.cesarwillymc.kmplogin.presentation.composables.CustomFullScreenLoading
 import com.cesarwillymc.kmplogin.presentation.composables.CustomSnackbar
 import com.cesarwillymc.kmplogin.presentation.navigation.event.ForgotPasswordEvent
-import com.cesarwillymc.kmplogin.presentation.notification.createNotificationChannel
-import com.cesarwillymc.kmplogin.presentation.notification.showNotification
+import com.cesarwillymc.kmplogin.presentation.screens.auth.component.AuthScaffold
+import com.cesarwillymc.kmplogin.presentation.screens.auth.component.ForgotContent
+import com.cesarwillymc.kmplogin.presentation.screens.auth.viewmodel.ForgotViewModel
+import com.cesarwillymc.kmplogin.presentation.utils.viewModel.rememberViewModel
+import dev.icerock.moko.resources.compose.stringResource
 
 /**
  * Created by Cesar Canaza on 10/10/23.
@@ -26,14 +25,15 @@ import com.cesarwillymc.kmplogin.presentation.notification.showNotification
  */
 @Composable
 fun ForgotScreen(
-    event: ForgotPasswordEvent,
-    forgotViewModel: ForgotViewModel= koinViewModel()
+    event: ForgotPasswordEvent
 ) {
-
+    val forgotViewModel = rememberViewModel(ForgotViewModel::class){
+        ForgotViewModel()
+    }
     val authUiState by forgotViewModel.authUiState.collectAsState()
     val emailField = forgotViewModel.emailText
     val snackbarHostState = remember { SnackbarHostState() }
-    val context = LocalContext.current
+
     AuthScaffold(
         isIconsTopEnabled = true,
         onNavigateUp = event::onBack
@@ -45,16 +45,18 @@ fun ForgotScreen(
     }
     CustomSnackbar(snackbarHostState = snackbarHostState)
     CustomFullScreenLoading(authUiState.isLoading)
+    val message = stringResource(SharedRes.strings.desc_error_snackbar)
+    val actionLabel = stringResource(SharedRes.strings.lbl_error)
     LaunchedEffect(authUiState) {
         when {
             authUiState.isSuccess -> {
-                context.createNotificationChannel()
-                context.showNotification()
+//                context.createNotificationChannel()
+//                context.showNotification()
             }
             authUiState.isError -> {
                 snackbarHostState.showSnackbar(
-                    message = context.getString(R.string.desc_error_snackbar),
-                    actionLabel = context.getString(R.string.lbl_error),
+                    message = message,
+                    actionLabel = actionLabel,
                     duration = SnackbarDuration.Long,
                     withDismissAction = true
                 )

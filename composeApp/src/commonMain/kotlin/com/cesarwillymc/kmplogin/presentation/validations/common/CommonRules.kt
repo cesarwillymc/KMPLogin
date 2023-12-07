@@ -1,6 +1,5 @@
 package com.cesarwillymc.kmplogin.presentation.validations.common
 
-import androidx.core.util.PatternsCompat
 import com.cesarwillymc.kmplogin.presentation.validations.entities.FieldValidator
 
 /**
@@ -13,11 +12,15 @@ object CommonRules {
     private const val PASSWORD_REGEX = "^(?=.*?[A-Z])(?=.*?[0-9])(?=.*[@#\$%^&+=.\\-_*!'<>,/:;?])" +
         "(?=" +
         ".*?[^\\s]).{8,}$"
+    private const val EMAIL_REGEX = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})+"
+
     val notEmptyField = FieldValidator(
         isSuccessValidator = { it.isNotEmpty() }
     )
     val validEmail = FieldValidator(
-        isSuccessValidator = { PatternsCompat.EMAIL_ADDRESS.toRegex().matches(it) }
+        isSuccessValidator = {
+            EMAIL_REGEX.toRegex().matches(it)
+        }
     )
     val validPassword = FieldValidator(
         isSuccessValidator = {

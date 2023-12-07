@@ -3,10 +3,8 @@ package com.cesarwillymc.kmplogin.data.sources.preferences
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.cesarwillymc.kmplogin.util.constants.EMPTY_STRING
-import com.cesarwillymc.kmplogin.util.state.Result
-import javax.inject.Inject
 
-class PreferencesDaoImpl @Inject constructor(
+class PreferencesDaoImpl constructor(
     private val sharedPreferences: SharedPreferences
 ) : PreferencesDao {
 
@@ -20,52 +18,52 @@ class PreferencesDaoImpl @Inject constructor(
     override val getToken: Result<String>
         get() = try {
             val session = sharedPreferences.getString(USER_SESSION, EMPTY_STRING)
-            Result.Success(data = session.orEmpty())
+            Result.success(session.orEmpty())
         } catch (e: Exception) {
-            Result.Error(e)
+            Result.failure(e)
         }
 
     override fun saveToken(value: String): Result<Unit> {
         sharedPreferences.edit {
             this.putString(USER_SESSION, value)
         }
-        return Result.Success(Unit)
+        return Result.success(Unit)
     }
     override val getTokenType: Result<String>
         get() = try {
             val session = sharedPreferences.getString(USER_SESSION_TYPE, EMPTY_STRING)
-            Result.Success(data = session.orEmpty())
+            Result.success(session.orEmpty())
         } catch (e: Exception) {
-            Result.Error(e)
+            Result.failure(e)
         }
 
     override fun saveRefreshToken(value: String): Result<Unit> {
         sharedPreferences.edit {
             this.putString(USER_SESSION_REFRESH, value)
         }
-        return Result.Success(Unit)
+        return Result.success(Unit)
     }
     override val getRefreshToken: Result<String>
         get() = try {
             val session = sharedPreferences.getString(USER_SESSION_REFRESH, EMPTY_STRING)
-            Result.Success(data = session.orEmpty())
+            Result.success(session.orEmpty())
         } catch (e: Exception) {
-            Result.Error(e)
+            Result.failure(e)
         }
 
     override fun saveTokenType(value: String): Result<Unit> {
         sharedPreferences.edit {
             this.putString(USER_SESSION_TYPE, value)
         }
-        return Result.Success(Unit)
+        return Result.success(Unit)
     }
 
     override val isLogged: Result<Boolean>
         get() = try {
             val session = sharedPreferences.getString(USER_SESSION, EMPTY_STRING)
-            Result.Success(data = !session.isNullOrBlank())
+            Result.success(!session.isNullOrBlank())
         } catch (e: Exception) {
-            Result.Error(e)
+            Result.failure(e)
         }
 
     override fun cleanPreferences(): Result<Unit> {
@@ -73,6 +71,6 @@ class PreferencesDaoImpl @Inject constructor(
             remove(USER_SESSION)
             remove(USER_SESSION_TYPE)
         }
-        return Result.Success(Unit)
+        return Result.success(Unit)
     }
 }

@@ -1,7 +1,6 @@
-package com.cesarwillymc.kmplogin.data.sources.survey
+package com.cesarwillymc.kmplogin.domain.repository
 
 import com.cesarwillymc.kmplogin.domain.usecase.survey.entities.SurveyList
-import com.cesarwillymc.kmplogin.util.state.Result
 
 /**
  * Created by Cesar Canaza on 11/16/23.
@@ -9,6 +8,6 @@ import com.cesarwillymc.kmplogin.util.state.Result
  *
  * IOWA, United States.
  */
-interface SurveyDataSource {
+interface SurveyRepository {
     suspend fun getSurveys(): Result<SurveyList>
 }

@@ -1,5 +1,4 @@
 package com.cesarwillymc.kmplogin.data.sources.preferences
-import com.cesarwillymc.kmplogin.util.state.Result
 
 interface PreferencesDao {
 

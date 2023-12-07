@@ -5,7 +5,6 @@ import com.cesarwillymc.kmplogin.util.extension.orEmpty
 import com.cesarwillymc.kmplogin.util.state.dataOrNull
 import okhttp3.Interceptor
 import okhttp3.Response
-import javax.inject.Inject
 
 /**
  * Created by Cesar Canaza on 11/15/23.
@@ -15,7 +14,7 @@ import javax.inject.Inject
  */
 
 // Here the token could be used
-class SessionInterceptor @Inject constructor(
+class SessionInterceptor  (
     private val preferencesDao: PreferencesDao
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {

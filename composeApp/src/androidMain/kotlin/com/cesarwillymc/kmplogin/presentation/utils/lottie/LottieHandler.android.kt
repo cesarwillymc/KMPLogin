@@ -29,4 +29,13 @@ actual object LottieHandler{
             modifier = Modifier.size(dimensionResource(id = R.dimen.ImageSemiLarge))
         )
     }
+    @Composable
+    actual fun errorFile() {
+        val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.animation_error))
+        LottieAnimation(
+            composition,
+            iterations = LottieConstants.IterateForever,
+            modifier = Modifier.size(dimensionResource(id = R.dimen.ImageSemiLarge))
+        )
+    }
 }

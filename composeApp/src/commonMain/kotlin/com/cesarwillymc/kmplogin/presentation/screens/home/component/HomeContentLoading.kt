@@ -15,16 +15,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.dimensionResource
-import com.cesarwillymc.kmplogin.R
 import com.cesarwillymc.kmplogin.presentation.composables.TextShimmer
+import com.cesarwillymc.kmplogin.presentation.theme.DimensionManager
+import com.cesarwillymc.kmplogin.presentation.theme.PaddingType
+import com.cesarwillymc.kmplogin.presentation.theme.getPadding
+import com.cesarwillymc.kmplogin.presentation.utils.rememberResponsive
 import com.cesarwillymc.kmplogin.util.constants.FRACTION_10
 import com.cesarwillymc.kmplogin.util.constants.FRACTION_30
 import com.cesarwillymc.kmplogin.util.constants.FRACTION_40
 import com.cesarwillymc.kmplogin.util.constants.FRACTION_50
 import com.cesarwillymc.kmplogin.util.constants.FRACTION_70
 import com.cesarwillymc.kmplogin.util.constants.FRACTION_90
-import com.cesarwillymc.kmplogin.util.extension.rememberResponsive
 
 /**
  * Created by Cesar Canaza on 11/16/23.
@@ -33,7 +34,6 @@ import com.cesarwillymc.kmplogin.util.extension.rememberResponsive
  * IOWA, United States.
  */
 @Composable
-@SuppressWarnings("LongMethod")
 fun HomeContentLoading() {
     val responsive = rememberResponsive()
     Box(
@@ -41,7 +41,7 @@ fun HomeContentLoading() {
             .fillMaxSize()
             .statusBarsPadding()
             .background(Color.Black)
-            .padding(dimensionResource(id = R.dimen.Normal100))
+            .padding( DimensionManager.getPadding(PaddingType.Medium))
     ) {
         Row(
             modifier = Modifier
@@ -50,60 +50,60 @@ fun HomeContentLoading() {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.Small50))) {
+            Column(verticalArrangement = Arrangement.spacedBy(DimensionManager.getPadding(PaddingType.Small))) {
                 TextShimmer(
                     modifier = Modifier.size(
                         width = responsive.withR(FRACTION_50),
-                        height = dimensionResource(id = R.dimen.Normal100)
+                        height =  DimensionManager.getPadding(PaddingType.Medium)
                     )
                 )
                 TextShimmer(
                     modifier = Modifier.size(
                         width = responsive.withR(FRACTION_30),
-                        height = dimensionResource(id = R.dimen.Normal100)
+                        height =  DimensionManager.getPadding(PaddingType.Medium)
                     )
                 )
             }
-            Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.Small100)))
+            Spacer(modifier = Modifier.size( DimensionManager.getPadding(PaddingType.Small)))
 
             TextShimmer(
-                modifier = Modifier.size(dimensionResource(id = R.dimen.Large175))
+                modifier = Modifier.size(DimensionManager.getPadding(PaddingType.Large))
             )
         }
         Column(
             modifier = Modifier.align(Alignment.BottomStart),
             verticalArrangement = Arrangement.spacedBy(
-                dimensionResource(id = R.dimen.Normal100)
+                DimensionManager.getPadding(PaddingType.Medium)
             )
         ) {
             TextShimmer(
                 modifier = Modifier.size(
                     width = responsive.withR(FRACTION_10),
-                    height = dimensionResource(id = R.dimen.Normal100)
+                    height =  DimensionManager.getPadding(PaddingType.Medium)
                 )
             )
             TextShimmer(
                 modifier = Modifier.size(
                     width = responsive.withR(FRACTION_70),
-                    height = dimensionResource(id = R.dimen.Normal100)
+                    height =  DimensionManager.getPadding(PaddingType.Medium)
                 )
             )
             TextShimmer(
                 modifier = Modifier.size(
                     width = responsive.withR(FRACTION_40),
-                    height = dimensionResource(id = R.dimen.Normal100)
+                    height =  DimensionManager.getPadding(PaddingType.Medium)
                 )
             )
             TextShimmer(
                 modifier = Modifier.size(
                     width = responsive.withR(FRACTION_90),
-                    height = dimensionResource(id = R.dimen.Normal100)
+                    height =  DimensionManager.getPadding(PaddingType.Medium)
                 )
             )
             TextShimmer(
                 modifier = Modifier.size(
                     width = responsive.withR(FRACTION_30),
-                    height = dimensionResource(id = R.dimen.Normal100)
+                    height = DimensionManager.getPadding(PaddingType.Medium)
                 )
             )
         }
