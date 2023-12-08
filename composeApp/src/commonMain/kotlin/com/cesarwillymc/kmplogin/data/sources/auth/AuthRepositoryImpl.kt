@@ -10,8 +10,6 @@ import com.cesarwillymc.kmplogin.data.sources.auth.remote.AuthRemoteDataSource
 import com.cesarwillymc.kmplogin.data.sources.preferences.PreferencesDao
 import com.cesarwillymc.kmplogin.domain.repository.AuthRepository
 import com.cesarwillymc.kmplogin.domain.usecase.auth.entities.Auth
-import com.cesarwillymc.kmplogin.util.state.dataOrNull
-import javax.inject.Inject
 
 /**
  * Created by Cesar Canaza on 11/15/23.
@@ -19,7 +17,7 @@ import javax.inject.Inject
  *
  * IOWA, United States.
  */
-class AuthRepositoryImpl @Inject constructor(
+class AuthRepositoryImpl (
     private val remoteDataSource: AuthRemoteDataSource,
     private val resultMapper: AuthResultMapper,
     private val sharedDao: PreferencesDao
@@ -28,15 +26,15 @@ class AuthRepositoryImpl @Inject constructor(
         return remoteDataSource.signIn(AuthRequest(email, password))
             .map(resultMapper::fromResponseToDomain).also {
                 if (it.isSuccess) {
-                    sharedDao.saveToken(it.dataOrNull()?.token.orEmpty())
-                    sharedDao.saveRefreshToken(it.dataOrNull()?.refreshToken.orEmpty())
-                    sharedDao.saveTokenType(it.dataOrNull()?.tokenType.orEmpty())
+                    sharedDao.saveToken(it.getOrNull()?.token.orEmpty())
+                    sharedDao.saveRefreshToken(it.getOrNull()?.refreshToken.orEmpty())
+                    sharedDao.saveTokenType(it.getOrNull()?.tokenType.orEmpty())
                 }
             }
     }
 
     override suspend fun logout(): Result<Unit> {
-        return remoteDataSource.logout(LogoutRequest(sharedDao.getToken.dataOrNull().orEmpty()))
+        return remoteDataSource.logout(LogoutRequest(sharedDao.getToken().getOrNull().orEmpty()))
             .also {
                 if (it.isSuccess) {
                     sharedDao.cleanPreferences()
@@ -51,18 +49,18 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun refreshToken(): Result<Auth> {
         return remoteDataSource.refreshToken(
             RefreshTokenRequest(
-                sharedDao.getRefreshToken.dataOrNull().orEmpty()
+                sharedDao.getRefreshToken().getOrNull().orEmpty()
             )
         ).map(resultMapper::fromResponseToDomain).also {
             if (it.isSuccess) {
-                sharedDao.saveToken(it.dataOrNull()?.token.orEmpty())
-                sharedDao.saveRefreshToken(it.dataOrNull()?.refreshToken.orEmpty())
-                sharedDao.saveTokenType(it.dataOrNull()?.tokenType.orEmpty())
+                sharedDao.saveToken(it.getOrNull()?.token.orEmpty())
+                sharedDao.saveRefreshToken(it.getOrNull()?.refreshToken.orEmpty())
+                sharedDao.saveTokenType(it.getOrNull()?.tokenType.orEmpty())
             }
         }
     }
 
     override suspend fun isLogged(): Result<Boolean> {
-        return sharedDao.isLogged
+        return sharedDao.getIsLogged()
     }
 }

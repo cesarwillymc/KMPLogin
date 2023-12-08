@@ -19,7 +19,7 @@ fun TextShimmer(
     modifier: Modifier
 ) {
     Box(
-        modifier = Modifier.clip(CircleShape).shimmer()
+        modifier = Modifier.clip(CircleShape)
     ) {
         Box(
             modifier = modifier

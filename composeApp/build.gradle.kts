@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.pluginGraphql)
     id("dev.icerock.mobile.multiplatform-resources")
+    id("kotlin-parcelize")
 }
 
 apollo {
@@ -16,6 +17,9 @@ apollo {
     }
 }
 kotlin {
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -29,7 +33,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {target->
         target.binaries.framework {
-            baseName = "composeApp"
+            baseName = "ComposeApp"
             isStatic = true
             export(libs.moko.resources)
             export(libs.moko.graphics)
@@ -46,20 +50,27 @@ kotlin {
             baseName = "ComposeApp"
             isStatic = true
             export(libs.decompose)
+            export("com.arkivanov.parcelize.darwin:runtime:0.2.3")
 
         }
+        extraSpecAttributes["resources"] = "['src/commonMain/resources/**']"
     }
 
     sourceSets {
-        androidMain.dependencies {
-            implementation(libs.compose.ui)
-            implementation(libs.compose.ui.tooling.preview)
-            implementation(libs.androidx.activity.compose)
-            implementation(libs.koin.androidx.compose)
-            implementation(libs.ktor.client.android)
-            implementation(libs.ktor.client.okhttp)
-            implementation(libs.kotlinx.coroutines.android)
-            implementation(libs.android.lottie)
+
+        androidMain{
+            dependsOn(commonMain.get())
+            dependencies {
+
+                implementation(libs.compose.ui)
+                implementation(libs.compose.ui.tooling.preview)
+                implementation(libs.androidx.activity.compose)
+                implementation(libs.koin.androidx.compose)
+                implementation(libs.ktor.client.android)
+                implementation(libs.ktor.client.okhttp)
+                implementation(libs.kotlinx.coroutines.android)
+                implementation(libs.android.lottie)
+            }
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -78,14 +89,23 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.ktor.client.auth)
             implementation(libs.kamel.image)
             implementation(libs.apolloCache)
             implementation(libs.apolloRuntime)
             implementation(libs.date.time)
             implementation(libs.moko.compose)
+            implementation(libs.androidx.datastore)
+            implementation(libs.essenty.parcelable)
 //            api(libs.mvvm.core)
 //            api(libs.mvvm.compose)
-            api(libs.lighthousegames.logging)
+//            api(libs.lighthousegames.logging)
+        }
+        iosMain {
+            dependsOn(commonMain.get())
+            dependencies {
+                implementation(libs.ktor.client.darwin)
+            }
         }
 //        val commonTest by getting {
 //            dependencies {
@@ -130,8 +150,11 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes +="META-INF/versions/9/previous-compilation-data.bin"
+
         }
     }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false

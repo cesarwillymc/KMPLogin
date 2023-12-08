@@ -2,13 +2,13 @@ package com.cesarwillymc.kmplogin.data.sources.preferences
 
 interface PreferencesDao {
 
-    val getToken: Result<String>
-    fun saveToken(value: String): Result<Unit>
-    val getRefreshToken: Result<String>
-    fun saveRefreshToken(value: String): Result<Unit>
-    val getTokenType: Result<String>
-    fun saveTokenType(value: String): Result<Unit>
+    suspend fun getToken(): Result<String>
+    suspend fun saveToken(value: String): Result<Unit>
+    suspend fun getRefreshToken(): Result<String>
+    suspend fun saveRefreshToken(value: String): Result<Unit>
+    suspend fun getTokenType(): Result<String>
+    suspend fun saveTokenType(value: String): Result<Unit>
 
-    val isLogged: Result<Boolean>
-    fun cleanPreferences(): Result<Unit>
+    suspend fun getIsLogged(): Result<Boolean>
+    suspend fun cleanPreferences(): Result<Unit>
 }

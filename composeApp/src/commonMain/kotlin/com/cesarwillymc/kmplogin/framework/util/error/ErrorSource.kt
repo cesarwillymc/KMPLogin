@@ -1,4 +1,4 @@
-package com.cesarwillymc.kmplogin.data.settings.network.util.error
+package com.cesarwillymc.kmplogin.framework.util.error
 
 /**
  * Created by Cesar Canaza on 11/15/23.

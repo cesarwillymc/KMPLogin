@@ -29,7 +29,7 @@ koinTest = "3.2.0"
 kotlin = "1.9.21"
 
 junit = "4.13.2"
-
+essenty = "1.1.0"
 kotlinxCoroutinesCore = "1.7.3"
 
 ktorClientAndroid = "2.3.1"
@@ -48,6 +48,7 @@ lottie = "4.2.0"
 moko = "0.23.0"
 mokoGraphics ="0.9.0"
 [libraries]
+essenty_parcelable = {module = "com.arkivanov.essenty:parcelable", version.ref = "essenty"}
 kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamelImage" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinCore" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCore" }
@@ -78,6 +79,7 @@ ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negoti
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorClientCore" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorClientContentNegotiation" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktorClientCore" }
+ktor-client-auth ={module="io.ktor:ktor-client-auth", version.ref="ktorClientCore"}
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktorClientCore" }
 mvvm-compose = { module = "dev.icerock.moko:mvvm-compose", version.ref = "mvvmCore" }
 mvvm-core = { module = "dev.icerock.moko:mvvm-core", version.ref = "mvvmCore" }

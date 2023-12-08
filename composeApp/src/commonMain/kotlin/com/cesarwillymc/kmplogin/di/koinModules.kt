@@ -1,28 +1,36 @@
 package com.cesarwillymc.kmplogin.di
 
-import com.cesarwillymc.kmplogin.data.settings.local.EncryptedSharedPreferencesFactory
+import com.apollographql.apollo3.ApolloClient
 import com.cesarwillymc.kmplogin.data.sources.auth.AuthRepositoryImpl
-import com.cesarwillymc.kmplogin.domain.repository.AuthRepository
 import com.cesarwillymc.kmplogin.data.sources.auth.mapper.AuthResultMapper
 import com.cesarwillymc.kmplogin.data.sources.auth.mapper.AuthResultMapperImpl
 import com.cesarwillymc.kmplogin.data.sources.auth.remote.AuthRemoteDataSource
-import com.cesarwillymc.kmplogin.data.sources.auth.remote.AuthRemoteDataSourceImpl
 import com.cesarwillymc.kmplogin.data.sources.preferences.PreferencesDao
-import com.cesarwillymc.kmplogin.data.sources.preferences.PreferencesDaoImpl
 import com.cesarwillymc.kmplogin.data.sources.survey.SurveyRepositoryImpl
-import com.cesarwillymc.kmplogin.domain.repository.SurveyRepository
 import com.cesarwillymc.kmplogin.data.sources.survey.mapper.SurveyMapper
 import com.cesarwillymc.kmplogin.data.sources.survey.mapper.SurveyMapperImpl
 import com.cesarwillymc.kmplogin.data.sources.survey.remote.SurveyRemoteDataSource
 import com.cesarwillymc.kmplogin.data.sources.survey.remote.SurveyRemoteDataSourceImpl
+import com.cesarwillymc.kmplogin.domain.repository.AuthRepository
+import com.cesarwillymc.kmplogin.domain.repository.SurveyRepository
 import com.cesarwillymc.kmplogin.domain.usecase.auth.ForgotUseCase
 import com.cesarwillymc.kmplogin.domain.usecase.auth.GetLoggedStateUseCase
 import com.cesarwillymc.kmplogin.domain.usecase.auth.LogoutUseCase
 import com.cesarwillymc.kmplogin.domain.usecase.auth.SignInUseCase
 import com.cesarwillymc.kmplogin.domain.usecase.survey.GetSurveysUseCase
+import com.cesarwillymc.kmplogin.framework.PreferencesDaoImpl
+import com.cesarwillymc.kmplogin.framework.network.AuthRemoteDataSourceImpl
+import com.cesarwillymc.kmplogin.framework.network.NoUserInterceptor
+import com.cesarwillymc.kmplogin.framework.network.VerifyTokenInterceptor
+import com.cesarwillymc.kmplogin.framework.util.CoroutinesModule
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.serialization.json.Json
+import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -94,12 +102,30 @@ val koinDispatcherModule = module {
     single<CoroutineDispatcher>(named(CoroutinesModule.IO)) { Dispatchers.IO }
     single<CoroutineDispatcher>(named(CoroutinesModule.MAIN)) { Dispatchers.Main }
 }
+expect val platformModule: Module
 
 val koinFrameworks = module {
+    single<HttpClient> {
+        HttpClient {
+            install(ContentNegotiation) {
+                json(
+                    Json {
+                        ignoreUnknownKeys = true
+                        useAlternativeNames = false
+                    }
+                )
+            }
+            install(NoUserInterceptor) {
+                queryParamId = ""
+                queryParamSecret = ""
+            }
+        }
+    }
+    single { VerifyTokenInterceptor(get(),get()) }
     single {
-        EncryptedSharedPreferencesFactory(
-            BuildConfig.SHARED_PREFERENCES_NAME,
-            androidContext()
-        ).sharedPreferences
+        ApolloClient.Builder()
+            .serverUrl("BuildConfig.BASE_URL_GQL")
+            .addHttpInterceptor(get<VerifyTokenInterceptor>())
+            .build()
     }
 }

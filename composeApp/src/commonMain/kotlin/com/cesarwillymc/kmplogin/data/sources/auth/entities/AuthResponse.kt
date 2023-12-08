@@ -1,6 +1,7 @@
 package com.cesarwillymc.kmplogin.data.sources.auth.entities
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Created by Cesar Canaza on 10/9/23.
@@ -8,24 +9,26 @@ import com.google.gson.annotations.SerializedName
  *
  * IOWA, United States.
  */
+@Serializable
 data class AuthResponse(
     val data: TokenData
 )
+@Serializable
 data class TokenData(
     val id: String,
     val type: String,
     val attributes: TokenAttributes
 )
-
+@Serializable
 data class TokenAttributes(
-    @SerializedName("access_token")
+    @SerialName("access_token")
     val accessToken: String,
-    @SerializedName("token_type")
+    @SerialName("token_type")
     val tokenType: String,
-    @SerializedName("expires_in")
+    @SerialName("expires_in")
     val expiresIn: Int,
-    @SerializedName("refresh_token")
+    @SerialName("refresh_token")
     val refreshToken: String,
-    @SerializedName("created_at")
+    @SerialName("created_at")
     val createdAt: Long
 )

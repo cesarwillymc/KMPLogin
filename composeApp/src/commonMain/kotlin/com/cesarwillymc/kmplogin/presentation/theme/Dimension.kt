@@ -3,7 +3,6 @@ package com.cesarwillymc.kmplogin.presentation.theme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
-import org.jetbrains.skia.Image
 
 /**
  * Created by Cesar Canaza on 12/5/23.

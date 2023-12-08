@@ -1,4 +1,4 @@
-package com.cesarwillymc.kmplogin.di
+package com.cesarwillymc.kmplogin.framework.util
 
 /**
  * Created by Cesar Canaza on 11/15/23.

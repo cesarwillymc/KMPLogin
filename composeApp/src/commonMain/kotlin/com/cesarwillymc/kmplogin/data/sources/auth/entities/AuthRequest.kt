@@ -1,6 +1,7 @@
 package com.cesarwillymc.kmplogin.data.sources.auth.entities
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Created by Cesar Canaza on 10/9/23.
@@ -8,9 +9,10 @@ import com.google.gson.annotations.SerializedName
  *
  * IOWA, United States.
  */
+@Serializable
 data class AuthRequest(
     val email: String,
     val password: String,
-    @SerializedName("grant_type")
+    @SerialName("grant_type")
     val grantType: String = "password"
 )
