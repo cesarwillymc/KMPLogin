@@ -44,6 +44,7 @@ actual fun DimensionManager.getOtherSize(otherType: OtherSizeType): Dp {
         OtherSizeType.MiniElevation -> dimensionResource(id =  R.dimen.MiniElevation)
         OtherSizeType.NormalElevation -> dimensionResource(id =  R.dimen.NormalElevation)
         OtherSizeType.HighElevation -> dimensionResource(id =  R.dimen.HighElevation)
+        OtherSizeType.TextFieldHeight -> dimensionResource(id = R.dimen.HeighNormal)
     }
 }
 @Composable

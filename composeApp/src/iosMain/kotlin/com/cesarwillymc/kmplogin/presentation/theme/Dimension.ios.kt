@@ -45,6 +45,7 @@ actual fun DimensionManager.getOtherSize(otherType: OtherSizeType): Dp {
         OtherSizeType.MiniElevation -> 4.dp
         OtherSizeType.NormalElevation -> 8.dp
         OtherSizeType.HighElevation -> 10.dp
+        OtherSizeType.TextFieldHeight -> 60.dp
     }
 }
 

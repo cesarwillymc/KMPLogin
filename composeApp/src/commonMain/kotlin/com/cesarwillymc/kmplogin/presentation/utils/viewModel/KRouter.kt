@@ -17,7 +17,6 @@ import kotlin.reflect.KClass
  * IOWA, United States.
  */
 
-
 @Suppress("UNCHECKED_CAST") // ViewModels must be Instances
 @Composable
 fun <T : ViewModel> rememberViewModel(

@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.Layout
 import com.cesarwillymc.kmplogin.SharedRes
 import com.cesarwillymc.kmplogin.presentation.composables.CustomPrimaryButton
 import com.cesarwillymc.kmplogin.presentation.composables.CustomTextField
@@ -65,4 +66,54 @@ fun ColumnScope.SignInContent(
         onClick = onContinue,
         isEnabled = !(isErrorPassword || isErrorEmail)
     )
+//    VerticalCenteredLayoutWithFullHeightFirstItem(Modifier.padding(8.dp)) {
+//        CustomPrimaryButton(
+//            title = stringResource(SharedRes.strings.til_sign_in),
+//            onClick = onContinue,
+//            isEnabled = !(isErrorPassword || isErrorEmail)
+//        )
+//        Text(
+//            text = stringResource(SharedRes.strings.lbl_forgot),
+//            modifier = Modifier
+//                .padding(end = DimensionManager.getPadding(PaddingType.Small))
+//                .clickable {
+//                    onClickForgotPassword()
+//                },
+//            color = TextColorOpacity
+//        )
+//    }
+}
+
+@Composable
+fun MyBasicColumn(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    Layout(
+        modifier = modifier,
+        content = content
+    ) { measurables, constraints ->
+        // Don't constrain child views further, measure them with given constraints
+        // List of measured children
+        val placeables = measurables.map { measurable ->
+            // Measure each children
+            measurable.measure(constraints)
+        }
+
+        // Set the size of the layout as big as it can
+        layout(constraints.maxWidth, constraints.maxHeight) {
+            // Track the y co-ord we have placed children up to
+            var yPosition = 0
+
+            // Place children in the parent layout
+            placeables.forEach { placeable ->
+                // Position item on the screen
+                placeable.placeRelative(x = yPosition, y = 0)
+
+                // Record the y co-ord placed up to
+                yPosition += placeable.width
+                println("textview: " + placeable.width)
+            }
+        }
+    }
 }

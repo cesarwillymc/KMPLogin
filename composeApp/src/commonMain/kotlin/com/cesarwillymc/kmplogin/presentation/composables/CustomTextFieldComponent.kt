@@ -2,18 +2,18 @@ package com.cesarwillymc.kmplogin.presentation.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,9 +32,11 @@ import androidx.compose.ui.unit.dp
 import com.cesarwillymc.kmplogin.presentation.theme.DimensionManager
 import com.cesarwillymc.kmplogin.presentation.theme.PaddingType
 import com.cesarwillymc.kmplogin.presentation.theme.TextColor
+import com.cesarwillymc.kmplogin.presentation.theme.TextColorOpacity
 import com.cesarwillymc.kmplogin.presentation.theme.getPadding
 import com.cesarwillymc.kmplogin.util.constants.EMPTY_STRING
 import com.cesarwillymc.kmplogin.util.constants.FRACTION_30
+import com.cesarwillymc.kmplogin.util.constants.FRACTION_40
 import com.cesarwillymc.kmplogin.util.constants.ONE
 
 /**
@@ -45,6 +47,7 @@ import com.cesarwillymc.kmplogin.util.constants.ONE
  */
 
 /** TextFieldValue control the cursor position **/
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomTextField(
     query: String,
@@ -53,34 +56,20 @@ fun CustomTextField(
     hintText: String = EMPTY_STRING,
     isError: Boolean = false,
     keyboardType: KeyboardType = KeyboardType.Text,
-    enableAnimationHint: Boolean = false,
-    trailingComposable: (@Composable () -> Unit)? = null,
+    enableAnimationHint: Boolean = true,
+    trailingComposable: @Composable () -> Unit = {},
     isTypePassword: Boolean = false,
 ) {
     var isFocused by remember { mutableStateOf(false) }
     val keyboardController = LocalTextInputService.current
+    val interactionSource = remember { MutableInteractionSource() }
 
     BasicTextField(
         value = query,
         modifier = modifier
-            .fillMaxWidth()
-            .height(DimensionManager.getPadding(PaddingType.Large))
             .onFocusChanged {
                 isFocused = it.isFocused
-            }
-            .background(
-                MaterialTheme.colorScheme.background.copy(alpha = FRACTION_30),
-                shape = RoundedCornerShape(DimensionManager.getPadding(PaddingType.Small))
-            )
-            .border(
-                width = ONE.dp,
-                color = when {
-                    query.isNotBlank() && !isError -> Color.Transparent
-                    query.isBlank() -> Color.Transparent
-                    else -> Color.Red
-                },
-                RoundedCornerShape(DimensionManager.getPadding(PaddingType.Small))
-            ),
+            }.fillMaxWidth(),
         onValueChange = onQueryChange,
         textStyle = MaterialTheme.typography.bodyMedium.copy(color = TextColor),
         maxLines = ONE,
@@ -88,6 +77,7 @@ fun CustomTextField(
             keyboardType = keyboardType,
             imeAction = ImeAction.Go
         ),
+        interactionSource = interactionSource,
         keyboardActions = KeyboardActions(
             onGo = {
                 keyboardController?.hideSoftwareKeyboard()
@@ -99,43 +89,70 @@ fun CustomTextField(
             VisualTransformation.None
         },
         decorationBox = { innerTextField ->
-            Row(horizontalArrangement = Arrangement.SpaceBetween) {
-                Box(
-                    modifier = Modifier,
-                ) {
-                    Box(
+
+            TextFieldDefaults.DecorationBox(
+                value = query,
+                innerTextField = innerTextField,
+                visualTransformation = if (isTypePassword) {
+                    PasswordVisualTransformation()
+                } else {
+                    VisualTransformation.None
+                },
+                placeholder = {
+                    Text(
+                        text = hintText,
+                        style = if (isFocused) {
+                            MaterialTheme.typography.bodySmall
+                        } else {
+                            MaterialTheme.typography.bodyMedium
+                        },
                         modifier = Modifier
-                            .padding(DimensionManager.getPadding(PaddingType.Small))
-                            .align(
-                                Alignment.CenterStart
+                            .padding(start = DimensionManager.getPadding(PaddingType.Small)),
+                        color = TextColor
+                    )
+                },
+                suffix = {
+                    Box { trailingComposable.invoke() }
+                },
+                singleLine = true,
+                enabled = true,
+                interactionSource = interactionSource,
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent
+
+                ),
+                container = {
+                    Box(
+                        modifier = Modifier.background(
+                            MaterialTheme.colorScheme.background.copy(alpha = FRACTION_30),
+                            shape = RoundedCornerShape(DimensionManager.getPadding(PaddingType.Small))
+                        )
+                            .border(
+                                width = FRACTION_40.dp,
+                                color = when {
+                                    query.isNotBlank() && !isError -> Color.Transparent
+                                    query.isBlank() -> Color.Transparent
+                                    else -> Color.Red
+                                },
+                                RoundedCornerShape(DimensionManager.getPadding(PaddingType.Small))
                             )
                     ) {
-                        innerTextField()
-                    }
-
-                    if (hintText.isNotEmpty() && (!(isFocused || query.isNotBlank()) || enableAnimationHint)) {
-                        Text(
-                            text = hintText,
-                            style = if (isFocused) {
-                                MaterialTheme.typography.bodySmall
-                            } else {
-                                MaterialTheme.typography.bodyMedium
-                            },
-                            modifier = Modifier
-                                .align(
-                                    if (isFocused || query.isNotBlank()) {
-                                        Alignment.TopStart
-                                    } else {
-                                        Alignment.CenterStart
-                                    }
-                                )
-                                .padding(start = DimensionManager.getPadding(PaddingType.Small)),
-                            color = TextColor
-                        )
+                        if (query.isNotEmpty() && enableAnimationHint) {
+                            Text(
+                                text = hintText,
+                                style = MaterialTheme.typography.bodySmall,
+                                modifier = Modifier
+                                    .padding(start = DimensionManager.getPadding(PaddingType.Small))
+                                    .align(Alignment.TopStart),
+                                color = TextColorOpacity
+                            )
+                        }
                     }
                 }
-                trailingComposable?.let { it() }
-            }
+
+            )
         }
     )
 }

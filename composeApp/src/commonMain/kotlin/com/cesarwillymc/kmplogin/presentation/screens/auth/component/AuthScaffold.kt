@@ -20,7 +20,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import com.cesarwillymc.kmplogin.SharedRes
 import com.cesarwillymc.kmplogin.presentation.theme.DimensionManager
+import com.cesarwillymc.kmplogin.presentation.theme.ImageType
 import com.cesarwillymc.kmplogin.presentation.theme.PaddingType
+import com.cesarwillymc.kmplogin.presentation.theme.getImageSize
 import com.cesarwillymc.kmplogin.presentation.theme.getPadding
 import com.cesarwillymc.kmplogin.presentation.utils.rememberResponsive
 import com.cesarwillymc.kmplogin.util.constants.FRACTION_20
@@ -61,7 +63,7 @@ fun AuthScaffold(
                     contentDescription = stringResource(SharedRes.strings.desc_back),
                     modifier = Modifier
                         .clickable(onClick = onNavigateUp)
-                        .align(Alignment.TopStart),
+                        .align(Alignment.TopStart).size(DimensionManager.getImageSize(ImageType.IconSmall)),
                     tint = Color.White
                 )
                 Box(modifier = Modifier.align(Alignment.TopEnd)) {

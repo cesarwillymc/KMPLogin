@@ -45,5 +45,6 @@ enum class ImageType {
 enum class OtherSizeType {
     MiniElevation,
     NormalElevation,
-    HighElevation
+    HighElevation,
+    TextFieldHeight
 }
