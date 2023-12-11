@@ -19,6 +19,7 @@
     <string name="lbl_reset">Reset</string>
     <string name="lbl_or">or</string>
     <string name="lbl_forgot_password">Forgot your password?</string>
+    <string name="lbl_forgot_password_description">Enter your email to receive instructions for resetting your password</string>
     <string name="til_sign_up">Sign Up</string>
     <string name="til_sign_in">Log in</string>
     <string name="lbl_no_account">Don\'t have an account</string>

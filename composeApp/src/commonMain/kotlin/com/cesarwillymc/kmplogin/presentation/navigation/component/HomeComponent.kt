@@ -7,7 +7,7 @@ import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.router.stack.pushNew
 import com.cesarwillymc.kmplogin.domain.usecase.survey.entities.SurveyItem
 import com.cesarwillymc.kmplogin.presentation.navigation.RootComponent
-import com.cesarwillymc.kmplogin.presentation.navigation.event.HomeEvent
+import com.cesarwillymc.kmplogin.presentation.navigation.event.HomeNavEvent
 
 /**
  * Created by Cesar Canaza on 12/4/23.
@@ -18,7 +18,7 @@ import com.cesarwillymc.kmplogin.presentation.navigation.event.HomeEvent
 class HomeComponent(
     componentContext: ComponentContext,
     private val navigation: StackNavigation<RootComponent.Configuration>
-) : ComponentContext by componentContext, HomeEvent {
+) : ComponentContext by componentContext, HomeNavEvent {
     @OptIn(ExperimentalDecomposeApi::class)
     override fun navigateToDetail(surveyItem: SurveyItem) {
         navigation.pushNew(configuration = RootComponent.Configuration.Detail(surveyItem))

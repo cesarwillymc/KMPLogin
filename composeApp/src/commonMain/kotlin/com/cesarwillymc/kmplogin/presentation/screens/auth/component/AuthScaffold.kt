@@ -54,7 +54,7 @@ fun AuthScaffold(
         Box(
             modifier = Modifier
                 .padding(paddingValues = paddingValues)
-                .padding( DimensionManager.getPadding(PaddingType.Medium))
+                .padding(DimensionManager.getPadding(PaddingType.Medium))
                 .fillMaxSize()
         ) {
             if (isIconsTopEnabled) {
@@ -63,7 +63,8 @@ fun AuthScaffold(
                     contentDescription = stringResource(SharedRes.strings.desc_back),
                     modifier = Modifier
                         .clickable(onClick = onNavigateUp)
-                        .align(Alignment.TopStart).size(DimensionManager.getImageSize(ImageType.IconSmall)),
+                        .align(Alignment.TopStart)
+                        .size(DimensionManager.getImageSize(ImageType.IconSmall)),
                     tint = Color.White
                 )
                 Box(modifier = Modifier.align(Alignment.TopEnd)) {
@@ -71,7 +72,13 @@ fun AuthScaffold(
                 }
             }
 
-            Column(verticalArrangement = Arrangement.spacedBy( DimensionManager.getPadding(PaddingType.Medium))) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(
+                    DimensionManager.getPadding(
+                        PaddingType.Medium
+                    )
+                )
+            ) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()

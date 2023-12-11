@@ -19,10 +19,10 @@ import androidx.compose.ui.Modifier
  * IOWA, United States.
  */
 @Composable
-fun CustomSnackbar(snackbarHostState: SnackbarHostState) {
+fun CustomSnackbar(snackBarHostState: SnackbarHostState) {
     Box(modifier = Modifier.fillMaxSize()) {
         SnackbarHost(
-            hostState = snackbarHostState,
+            hostState = snackBarHostState,
             modifier = Modifier.align(Alignment.BottomCenter)
                 .padding(WindowInsets.ime.asPaddingValues())
         )

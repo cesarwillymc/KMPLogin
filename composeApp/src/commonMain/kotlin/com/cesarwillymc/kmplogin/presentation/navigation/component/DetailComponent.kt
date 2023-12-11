@@ -5,7 +5,7 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.pop
 import com.cesarwillymc.kmplogin.domain.usecase.survey.entities.SurveyItem
 import com.cesarwillymc.kmplogin.presentation.navigation.RootComponent
-import com.cesarwillymc.kmplogin.presentation.navigation.event.DetailEvent
+import com.cesarwillymc.kmplogin.presentation.navigation.event.DetailNavEvent
 
 /**
  * Created by Cesar Canaza on 12/4/23.
@@ -17,7 +17,7 @@ class DetailComponent(
     val survey: SurveyItem,
     componentContext: ComponentContext,
     private val navigation: StackNavigation<RootComponent.Configuration>
-) : ComponentContext by componentContext, DetailEvent {
+) : ComponentContext by componentContext, DetailNavEvent {
     override fun onBack() {
         navigation.pop()
     }

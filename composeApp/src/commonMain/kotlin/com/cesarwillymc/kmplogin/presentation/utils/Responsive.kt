@@ -15,12 +15,17 @@ import com.cesarwillymc.kmplogin.util.constants.ZERO
  * Lima, Peru.
  */
 @Composable
-fun rememberResponsive(): Responsive {
-    val configuration = LocalViewConfiguration.current.minimumTouchTargetSize
-    return Responsive(configuration)
+expect fun rememberResponsive(): Responsive
+
+expect class Responsive {
+
+    /** get size screen by size **/
+    fun withR(percent: Float = ONE_F):Dp
+    fun heightR(percent: Float = ONE_F):Dp
 }
 
-class Responsive(private val configuration: DpSize) {
+/*
+expect class Responsive(private val configuration: DpSize) {
     private var width: Dp = ZERO.dp
     private var height: Dp = ZERO.dp
 
@@ -37,3 +42,5 @@ class Responsive(private val configuration: DpSize) {
     fun withR(percent: Float = ONE_F) = (width * percent)
     fun heightR(percent: Float = ONE_F) = (height * percent)
 }
+
+ */

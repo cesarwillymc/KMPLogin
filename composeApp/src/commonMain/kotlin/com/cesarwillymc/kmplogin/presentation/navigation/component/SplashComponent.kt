@@ -5,7 +5,7 @@ import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.pushNew
 import com.cesarwillymc.kmplogin.presentation.navigation.RootComponent
-import com.cesarwillymc.kmplogin.presentation.navigation.event.SplashEvent
+import com.cesarwillymc.kmplogin.presentation.navigation.event.SplashNavEvent
 
 /**
  * Created by Cesar Canaza on 12/4/23.
@@ -17,7 +17,7 @@ import com.cesarwillymc.kmplogin.presentation.navigation.event.SplashEvent
 class SplashComponent(
     componentContext: ComponentContext,
     private val navigation: StackNavigation<RootComponent.Configuration>
-) : ComponentContext by componentContext, SplashEvent {
+) : ComponentContext by componentContext, SplashNavEvent {
 
     override fun navigateToHome() {
         navigation.pushNew(RootComponent.Configuration.Home)

@@ -10,6 +10,8 @@ import com.cesarwillymc.kmplogin.data.sources.auth.remote.AuthRemoteDataSource
 import com.cesarwillymc.kmplogin.data.sources.preferences.PreferencesDao
 import com.cesarwillymc.kmplogin.domain.repository.AuthRepository
 import com.cesarwillymc.kmplogin.domain.usecase.auth.entities.Auth
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 
 /**
  * Created by Cesar Canaza on 11/15/23.
@@ -17,7 +19,7 @@ import com.cesarwillymc.kmplogin.domain.usecase.auth.entities.Auth
  *
  * IOWA, United States.
  */
-class AuthRepositoryImpl (
+class AuthRepositoryImpl(
     private val remoteDataSource: AuthRemoteDataSource,
     private val resultMapper: AuthResultMapper,
     private val sharedDao: PreferencesDao
@@ -34,7 +36,7 @@ class AuthRepositoryImpl (
     }
 
     override suspend fun logout(): Result<Unit> {
-        return remoteDataSource.logout(LogoutRequest(sharedDao.getToken().getOrNull().orEmpty()))
+        return remoteDataSource.logout(LogoutRequest(sharedDao.getToken().first()))
             .also {
                 if (it.isSuccess) {
                     sharedDao.cleanPreferences()
@@ -49,7 +51,7 @@ class AuthRepositoryImpl (
     override suspend fun refreshToken(): Result<Auth> {
         return remoteDataSource.refreshToken(
             RefreshTokenRequest(
-                sharedDao.getRefreshToken().getOrNull().orEmpty()
+                sharedDao.getRefreshToken().firstOrNull().orEmpty()
             )
         ).map(resultMapper::fromResponseToDomain).also {
             if (it.isSuccess) {
@@ -61,6 +63,10 @@ class AuthRepositoryImpl (
     }
 
     override suspend fun isLogged(): Result<Boolean> {
-        return sharedDao.getIsLogged()
+        return try {
+            Result.success(sharedDao.getIsLogged().first())
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 }

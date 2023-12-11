@@ -4,7 +4,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.pop
 import com.cesarwillymc.kmplogin.presentation.navigation.RootComponent
-import com.cesarwillymc.kmplogin.presentation.navigation.event.ForgotPasswordEvent
+import com.cesarwillymc.kmplogin.presentation.navigation.event.ForgotPasswordNavEvent
 
 /**
  * Created by Cesar Canaza on 12/4/23.
@@ -15,7 +15,7 @@ import com.cesarwillymc.kmplogin.presentation.navigation.event.ForgotPasswordEve
 class ForgotPasswordComponent(
     componentContext: ComponentContext,
     private val navigation: StackNavigation<RootComponent.Configuration>
-) : ComponentContext by componentContext, ForgotPasswordEvent {
+) : ComponentContext by componentContext, ForgotPasswordNavEvent {
     override fun onBack() {
         navigation.pop()
     }

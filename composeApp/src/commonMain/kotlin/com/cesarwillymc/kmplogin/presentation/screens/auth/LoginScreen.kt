@@ -10,10 +10,12 @@ import androidx.compose.runtime.remember
 import com.cesarwillymc.kmplogin.SharedRes
 import com.cesarwillymc.kmplogin.presentation.composables.CustomFullScreenLoading
 import com.cesarwillymc.kmplogin.presentation.composables.CustomSnackbar
-import com.cesarwillymc.kmplogin.presentation.navigation.event.SignInEvent
+import com.cesarwillymc.kmplogin.presentation.navigation.event.SignInNavEvent
 import com.cesarwillymc.kmplogin.presentation.screens.auth.component.AuthScaffold
 import com.cesarwillymc.kmplogin.presentation.screens.auth.component.SignInContent
+import com.cesarwillymc.kmplogin.presentation.screens.auth.event.AuthEvent
 import com.cesarwillymc.kmplogin.presentation.screens.auth.viewmodel.LoginViewModel
+import com.cesarwillymc.kmplogin.presentation.utils.kotlinExtension.getStateUi
 import com.cesarwillymc.kmplogin.presentation.utils.viewModel.rememberViewModel
 import dev.icerock.moko.resources.compose.stringResource
 
@@ -25,16 +27,18 @@ import dev.icerock.moko.resources.compose.stringResource
  */
 @Composable
 fun LoginScreen(
-    event: SignInEvent
+    event: SignInNavEvent
 ) {
-    val loginViewModel = rememberViewModel(LoginViewModel::class){
+    val loginViewModel = rememberViewModel(LoginViewModel::class) {
         LoginViewModel()
     }
+    val loginEventViewModel by loginViewModel.event.getStateUi()
+    val authUiState by loginViewModel.authUiState.collectAsState()
     val passwordField = loginViewModel.passwordText
     val emailText = loginViewModel.emailText
-    val authUiState by loginViewModel.authUiState.collectAsState()
-    val snackbarHostState = remember { SnackbarHostState() }
-    CustomFullScreenLoading(authUiState.isLoading)
+    val snackBarHostState = remember { SnackbarHostState() }
+
+
     AuthScaffold(
         isIconsTopEnabled = false
     ) {
@@ -45,21 +49,24 @@ fun LoginScreen(
             onClickForgotPassword = event::navigateToForgotPassword
         )
     }
-    CustomSnackbar(snackbarHostState = snackbarHostState)
+    CustomFullScreenLoading(authUiState.isLoading)
+    CustomSnackbar(snackBarHostState = snackBarHostState)
     val message = stringResource(SharedRes.strings.desc_error_snackbar)
     val actionLabel = stringResource(SharedRes.strings.lbl_error)
-    LaunchedEffect(authUiState) {
-
-        if (authUiState.isError) {
-            snackbarHostState.showSnackbar(
-                message = message,
-                actionLabel = actionLabel,
-                duration = SnackbarDuration.Long,
-                withDismissAction = true
-            )
-        }
-        if (authUiState.isSuccess) {
-            event.navigateToForgotPassword()
+    LaunchedEffect(loginEventViewModel) {
+        when (loginEventViewModel as? AuthEvent) {
+            AuthEvent.IsFailure -> {
+                snackBarHostState.showSnackbar(
+                    message = message,
+                    actionLabel = actionLabel,
+                    duration = SnackbarDuration.Long,
+                    withDismissAction = true
+                )
+            }
+            AuthEvent.IsSuccess -> {
+                event.navigateToHome()
+            }
+            else -> {}
         }
     }
 }

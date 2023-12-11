@@ -6,4 +6,4 @@ package com.cesarwillymc.kmplogin.presentation.navigation.event
  *
  * IOWA, United States.
  */
- interface ForgotPasswordEvent : OnBackEvent
+ interface DetailNavEvent : OnBackEvent

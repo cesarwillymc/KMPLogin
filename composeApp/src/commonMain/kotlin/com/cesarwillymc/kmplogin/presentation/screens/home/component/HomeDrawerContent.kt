@@ -5,11 +5,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
@@ -18,14 +16,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import com.cesarwillymc.kmplogin.SharedRes
+import com.cesarwillymc.kmplogin.presentation.composables.VerticalCenteredLayoutWithFullHeightFirstItem
 import com.cesarwillymc.kmplogin.presentation.theme.DimensionManager
+import com.cesarwillymc.kmplogin.presentation.theme.ImageType
 import com.cesarwillymc.kmplogin.presentation.theme.PaddingType
 import com.cesarwillymc.kmplogin.presentation.theme.TextColor
 import com.cesarwillymc.kmplogin.presentation.theme.TextColorOpacity
 import com.cesarwillymc.kmplogin.presentation.theme.Typography
+import com.cesarwillymc.kmplogin.presentation.theme.getImageSize
 import com.cesarwillymc.kmplogin.presentation.theme.getPadding
 import com.cesarwillymc.kmplogin.presentation.utils.rememberResponsive
-import com.cesarwillymc.kmplogin.util.constants.FRACTION_50
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 
@@ -46,27 +46,28 @@ fun HomeDrawerContent(
             DimensionManager.getPadding(PaddingType.Medium)
         )
     ) {
-        Row(horizontalArrangement = Arrangement.SpaceBetween) {
-            Text(
-                stringResource( SharedRes.strings.desc_description),
-                style = Typography.titleLarge,
-                color = TextColor
 
-            )
-            Spacer(modifier = Modifier.size(DimensionManager.getPadding(PaddingType.Large)))
-            Box(
-                modifier = Modifier
-                    .clip(shape = CircleShape)
-            ) {
-                Image(
-                    painter = painterResource(SharedRes.images.profile),
-                    contentDescription = stringResource(SharedRes.strings.lbl_profile),
-                    modifier = Modifier.size(DimensionManager.getPadding(PaddingType.Large)),
-                    contentScale = ContentScale.Crop
+            VerticalCenteredLayoutWithFullHeightFirstItem(modifier = Modifier.wrapContentHeight()) {
+                Text(
+                    stringResource(SharedRes.strings.desc_description),
+                    style = Typography.titleLarge,
+                    color = TextColor
+
                 )
+                Box(
+                    modifier = Modifier
+                        .clip(shape = CircleShape)
+                ) {
+                    Image(
+                        painter = painterResource(SharedRes.images.profile),
+                        contentDescription = stringResource(SharedRes.strings.lbl_profile),
+                        modifier = Modifier.size(DimensionManager.getImageSize(ImageType.IconMedium)),
+                        contentScale = ContentScale.Crop
+                    )
+                }
             }
-        }
-        Divider(modifier = Modifier.width(responsive.withR(FRACTION_50)))
+
+        Divider()
         Text(
             stringResource(SharedRes.strings.lbl_logout),
             style = Typography.bodyMedium,

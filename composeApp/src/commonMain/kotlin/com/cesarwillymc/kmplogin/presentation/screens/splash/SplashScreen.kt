@@ -1,10 +1,11 @@
 package com.cesarwillymc.kmplogin.presentation.screens.splash
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -15,24 +16,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.unit.dp
 import com.cesarwillymc.kmplogin.SharedRes
-import com.cesarwillymc.kmplogin.presentation.navigation.event.SplashEvent
-import com.cesarwillymc.kmplogin.presentation.screens.home.viewmodel.HomeViewModel
-import com.cesarwillymc.kmplogin.presentation.utils.animations.OvershootInterpolatorFactory
+import com.cesarwillymc.kmplogin.presentation.navigation.event.SplashNavEvent
 import com.cesarwillymc.kmplogin.presentation.utils.rememberResponsive
 import com.cesarwillymc.kmplogin.presentation.utils.viewModel.rememberViewModel
-import com.cesarwillymc.kmplogin.util.constants.DELAY_2500
-import com.cesarwillymc.kmplogin.util.constants.DELAY_3000
+import com.cesarwillymc.kmplogin.util.constants.DELAY_1000
+import com.cesarwillymc.kmplogin.util.constants.DELAY_1500
 import com.cesarwillymc.kmplogin.util.constants.FRACTION_20
 import com.cesarwillymc.kmplogin.util.constants.ONE_F
-import com.cesarwillymc.kmplogin.util.constants.TWO_F
 import com.cesarwillymc.kmplogin.util.constants.ZERO
 import com.cesarwillymc.kmplogin.util.constants.ZERO_F
 import dev.icerock.moko.resources.compose.painterResource
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 /**
  * Created by Cesar Canaza on 11/15/23.
@@ -42,35 +37,27 @@ import kotlinx.coroutines.launch
  */
 @Composable
 fun SplashScreen(
-    event: SplashEvent
+    event: SplashNavEvent
 ) {
-    val splashViewModel = rememberViewModel(SplashViewModel::class){
+    val splashViewModel = rememberViewModel(SplashViewModel::class) {
         SplashViewModel()
     }
-    val offsetState = remember { androidx.compose.animation.core.Animatable(ZERO_F) }
-    val alphaState = remember { androidx.compose.animation.core.Animatable(ONE_F) }
-    LocalViewConfiguration.current.minimumTouchTargetSize
+    val offsetState = remember { Animatable(ZERO_F) }
+    val alphaState = remember { Animatable(ONE_F) }
     val responsive = rememberResponsive()
     val navigateHome by splashViewModel.navigateHome.collectAsState()
     LaunchedEffect(true) {
-        launch {
-            offsetState.animateTo(
-                targetValue = -responsive.heightR(FRACTION_20).value, // Adjust this value based on your layout
-                animationSpec = tween(
-                    durationMillis = DELAY_3000,
-                    easing = {
-                        OvershootInterpolatorFactory(TWO_F).getInterpolation(it)
-                    }
-                )
+        offsetState.animateTo(
+            targetValue = -responsive.heightR(FRACTION_20).value, // Adjust this value based on your layout
+            animationSpec = tween(
+                durationMillis = DELAY_1500.toInt(),
+                easing = FastOutSlowInEasing
             )
-        }
-        launch {
-            alphaState.animateTo(
-                targetValue = ZERO_F,
-                animationSpec = tween(durationMillis = DELAY_3000)
-            )
-        }
-        delay(DELAY_2500)
+        )
+        alphaState.animateTo(
+            targetValue = ZERO_F,
+            animationSpec = tween(durationMillis = DELAY_1000.toInt())
+        )
         if (navigateHome == true) {
             event.navigateToHome()
         } else {
@@ -79,8 +66,8 @@ fun SplashScreen(
     }
 
     Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
         Image(
             painterResource(SharedRes.images.img_backgroud),
@@ -89,12 +76,13 @@ fun SplashScreen(
             contentScale = ContentScale.FillBounds
         )
 
-        Image(
-            painterResource(SharedRes.images.logo),
-            contentDescription = "Image Logo",
-            modifier = Modifier
-                .offset(y = offsetState.value.dp, x = ZERO.dp)
+            Image(
+                painterResource(SharedRes.images.logo),
+                contentDescription = "Image Logo",
+                modifier = Modifier. offset(y = offsetState.value.dp, x = ZERO.dp)
                 .alpha(alpha = alphaState.value)
-        )
+            )
+
+
     }
 }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -18,15 +19,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import com.cesarwillymc.kmplogin.SharedRes
+import com.cesarwillymc.kmplogin.domain.usecase.survey.entities.SurveyItem
 import com.cesarwillymc.kmplogin.presentation.composables.CustomPrimaryButton
-import com.cesarwillymc.kmplogin.presentation.navigation.event.DetailEvent
-import com.cesarwillymc.kmplogin.presentation.screens.auth.viewmodel.LoginViewModel
+import com.cesarwillymc.kmplogin.presentation.navigation.event.DetailNavEvent
 import com.cesarwillymc.kmplogin.presentation.screens.home.viewmodel.DetailSurveyViewModel
 import com.cesarwillymc.kmplogin.presentation.theme.DimensionManager
+import com.cesarwillymc.kmplogin.presentation.theme.ImageType
 import com.cesarwillymc.kmplogin.presentation.theme.PaddingType
 import com.cesarwillymc.kmplogin.presentation.theme.TextColor
 import com.cesarwillymc.kmplogin.presentation.theme.TextColorOpacity
 import com.cesarwillymc.kmplogin.presentation.theme.Typography
+import com.cesarwillymc.kmplogin.presentation.theme.getImageSize
 import com.cesarwillymc.kmplogin.presentation.theme.getPadding
 import com.cesarwillymc.kmplogin.presentation.utils.viewModel.rememberViewModel
 import com.cesarwillymc.kmplogin.util.constants.FRACTION_30
@@ -43,10 +46,11 @@ import io.kamel.image.asyncPainterResource
  */
 @Composable
 fun DetailSurveyScreen(
-    event: DetailEvent
+    event: DetailNavEvent,
+    detail: SurveyItem
 ) {
-    val detailSurveyViewModel = rememberViewModel(DetailSurveyViewModel::class){
-        DetailSurveyViewModel()
+    val detailSurveyViewModel = rememberViewModel(DetailSurveyViewModel::class) {
+        DetailSurveyViewModel(detail)
     }
     val detailSurveyUiState by detailSurveyViewModel.detailUiState.collectAsState()
     Scaffold { paddingValues ->
@@ -86,6 +90,7 @@ fun DetailSurveyScreen(
                         painter = painterResource(SharedRes.images.arrow_ios_back),
                         contentDescription = stringResource(SharedRes.strings.desc_back),
                         modifier = Modifier
+                            .size(DimensionManager.getImageSize(ImageType.IconSmall))
                             .clickable(onClick = event::onBack),
                         tint = Color.White
                     )

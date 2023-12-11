@@ -7,7 +7,7 @@ package com.cesarwillymc.kmplogin.framework.network
  * IOWA, United States.
  */
 object HttpRoutes {
-    private const val BASE_URL = ""
+    private const val BASE_URL = "https://survey-api.nimblehq.co"
     object Auth {
         const val LOGIN = "$BASE_URL/api/v1/oauth/token"
         const val LOGOUT = "$BASE_URL/api/v1/oauth/revoke"

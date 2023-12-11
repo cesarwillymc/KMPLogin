@@ -112,19 +112,20 @@ val koinFrameworks = module {
                     Json {
                         ignoreUnknownKeys = true
                         useAlternativeNames = false
+                        encodeDefaults = true
                     }
                 )
             }
             install(NoUserInterceptor) {
-                queryParamId = ""
-                queryParamSecret = ""
+                queryParamId = "ofzl-2h5ympKa0WqqTzqlVJUiRsxmXQmt5tkgrlWnOE"
+                queryParamSecret = "lMQb900L-mTeU-FVTCwyhjsfBwRCxwwbCitPob96cuU"
             }
         }
     }
     single { VerifyTokenInterceptor(get(),get()) }
     single {
         ApolloClient.Builder()
-            .serverUrl("BuildConfig.BASE_URL_GQL")
+            .serverUrl("https://survey-api.nimblehq.co/graphql")
             .addHttpInterceptor(get<VerifyTokenInterceptor>())
             .build()
     }

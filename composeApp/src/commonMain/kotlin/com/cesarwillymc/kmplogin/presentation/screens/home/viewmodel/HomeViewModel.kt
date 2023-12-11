@@ -1,7 +1,6 @@
 package com.cesarwillymc.kmplogin.presentation.screens.home.viewmodel
 
 import com.cesarwillymc.kmplogin.domain.usecase.auth.LogoutUseCase
-import com.cesarwillymc.kmplogin.domain.usecase.auth.SignInUseCase
 import com.cesarwillymc.kmplogin.domain.usecase.survey.GetSurveysUseCase
 import com.cesarwillymc.kmplogin.presentation.screens.auth.state.AuthUiState
 import com.cesarwillymc.kmplogin.presentation.screens.home.state.HomeUiState
@@ -21,7 +20,7 @@ import org.koin.core.component.get
  * IOWA, United States.
  */
 
-class HomeViewModel: ViewModel(), KoinComponent {
+class HomeViewModel : ViewModel(), KoinComponent {
     /** Dependency injection */
     private val logoutUseCase = get<LogoutUseCase>()
     private val getSurveys = get<GetSurveysUseCase>()
@@ -30,29 +29,31 @@ class HomeViewModel: ViewModel(), KoinComponent {
     val authUiState get() = _authUiState
     private val _authUiState = MutableStateFlow(AuthUiState())
     val homeUiState get() = _homeUiState
-    private val _homeUiState = MutableStateFlow(HomeUiState())
+    private val _homeUiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
 
     init {
         onLoadSurveys()
     }
+
     /** Behaviors */
     fun onLoadSurveys() {
-        _homeUiState.update { HomeUiState(isLoading = true) }
+        _homeUiState.update { HomeUiState.Loading }
         viewModelScope.launch {
             getSurveys(Unit).let { result ->
                 when {
                     result.isSuccess -> {
                         delay(DELAY_1000)
-                        _homeUiState.update { HomeUiState(isSuccess = true, data = result.getOrNull()) }
+                        _homeUiState.update { HomeUiState.Success(result.getOrNull()) }
                     }
 
                     result.isFailure -> {
-                        _homeUiState.update { HomeUiState(isError = true) }
+                        _homeUiState.update { HomeUiState.Error }
                     }
                 }
             }
         }
     }
+
     fun logout() {
         _authUiState.update { AuthUiState(isLoading = true) }
         viewModelScope.launch {

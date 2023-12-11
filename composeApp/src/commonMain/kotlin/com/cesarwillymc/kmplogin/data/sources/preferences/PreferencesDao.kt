@@ -1,14 +1,16 @@
 package com.cesarwillymc.kmplogin.data.sources.preferences
 
+import kotlinx.coroutines.flow.Flow
+
 interface PreferencesDao {
 
-    suspend fun getToken(): Result<String>
-    suspend fun saveToken(value: String): Result<Unit>
-    suspend fun getRefreshToken(): Result<String>
-    suspend fun saveRefreshToken(value: String): Result<Unit>
-    suspend fun getTokenType(): Result<String>
-    suspend fun saveTokenType(value: String): Result<Unit>
+    suspend fun getToken(): Flow<String>
+    suspend fun saveToken(value: String)
+    suspend fun getRefreshToken(): Flow<String>
+    suspend fun saveRefreshToken(value: String)
+    suspend fun getTokenType(): Flow<String>
+    suspend fun saveTokenType(value: String)
 
-    suspend fun getIsLogged(): Result<Boolean>
-    suspend fun cleanPreferences(): Result<Unit>
+    suspend fun getIsLogged(): Flow<Boolean>
+    suspend fun cleanPreferences()
 }

@@ -16,7 +16,7 @@ import kotlin.reflect.KClass
  *
  * IOWA, United States.
  */
-
+// Save the state of the viewModel for persist the information in configuration changes of the device
 @Suppress("UNCHECKED_CAST") // ViewModels must be Instances
 @Composable
 fun <T : ViewModel> rememberViewModel(

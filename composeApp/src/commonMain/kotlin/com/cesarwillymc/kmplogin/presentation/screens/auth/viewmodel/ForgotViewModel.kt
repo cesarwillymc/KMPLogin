@@ -1,6 +1,7 @@
 package com.cesarwillymc.kmplogin.presentation.screens.auth.viewmodel
 
 import com.cesarwillymc.kmplogin.domain.usecase.auth.ForgotUseCase
+import com.cesarwillymc.kmplogin.presentation.screens.auth.event.AuthEvent
 import com.cesarwillymc.kmplogin.presentation.screens.auth.state.AuthUiState
 import com.cesarwillymc.kmplogin.presentation.utils.viewModel.ViewModel
 import com.cesarwillymc.kmplogin.presentation.validations.field.EmailField
@@ -30,12 +31,15 @@ class ForgotViewModel  : ViewModel(), KoinComponent {
         authUiState.update { AuthUiState(isLoading = true) }
         viewModelScope.launch {
             forgotUseCase(emailText.text.value).let { result ->
-                authUiState.update {
-                    AuthUiState(
-                        isError = result.isFailure,
-                        isSuccess = result.isSuccess
-                    )
+                when{
+                    result.isFailure->{
+                        event.send(AuthEvent.IsFailure)
+                    }
+                    result.isSuccess->{
+                        event.send(AuthEvent.IsSuccess)
+                    }
                 }
+                authUiState.update { AuthUiState() }
             }
         }
     }

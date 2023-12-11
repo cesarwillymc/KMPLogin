@@ -5,7 +5,7 @@ import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.pushNew
 import com.cesarwillymc.kmplogin.presentation.navigation.RootComponent
-import com.cesarwillymc.kmplogin.presentation.navigation.event.SignInEvent
+import com.cesarwillymc.kmplogin.presentation.navigation.event.SignInNavEvent
 
 /**
  * Created by Cesar Canaza on 12/4/23.
@@ -17,7 +17,7 @@ import com.cesarwillymc.kmplogin.presentation.navigation.event.SignInEvent
 class SignInComponent(
     componentContext: ComponentContext,
     private val navigation: StackNavigation<RootComponent.Configuration>
-) : ComponentContext by componentContext, SignInEvent {
+) : ComponentContext by componentContext, SignInNavEvent {
 
     override fun navigateToHome() {
         navigation.pushNew(RootComponent.Configuration.Home)

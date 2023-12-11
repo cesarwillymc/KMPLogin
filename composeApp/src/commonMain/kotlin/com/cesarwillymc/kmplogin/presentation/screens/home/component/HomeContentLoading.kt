@@ -17,7 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.cesarwillymc.kmplogin.presentation.composables.TextShimmer
 import com.cesarwillymc.kmplogin.presentation.theme.DimensionManager
+import com.cesarwillymc.kmplogin.presentation.theme.ImageType
 import com.cesarwillymc.kmplogin.presentation.theme.PaddingType
+import com.cesarwillymc.kmplogin.presentation.theme.getImageSize
 import com.cesarwillymc.kmplogin.presentation.theme.getPadding
 import com.cesarwillymc.kmplogin.presentation.utils.rememberResponsive
 import com.cesarwillymc.kmplogin.util.constants.FRACTION_10
@@ -48,7 +50,7 @@ fun HomeContentLoading() {
                 .align(Alignment.TopCenter)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceAround
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(DimensionManager.getPadding(PaddingType.Small))) {
                 TextShimmer(
@@ -67,7 +69,7 @@ fun HomeContentLoading() {
             Spacer(modifier = Modifier.size( DimensionManager.getPadding(PaddingType.Small)))
 
             TextShimmer(
-                modifier = Modifier.size(DimensionManager.getPadding(PaddingType.Large))
+                modifier = Modifier.size(DimensionManager.getImageSize(ImageType.IconMedium))
             )
         }
         Column(

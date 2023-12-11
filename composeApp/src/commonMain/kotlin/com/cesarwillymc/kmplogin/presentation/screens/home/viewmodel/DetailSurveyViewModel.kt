@@ -14,10 +14,13 @@ import org.koin.core.component.KoinComponent
  * IOWA, United States.
  */
 
-class DetailSurveyViewModel : ViewModel(), KoinComponent {
+class DetailSurveyViewModel(detail: SurveyItem) : ViewModel(), KoinComponent {
     /** Variables */
     val detailUiState get() = _detailUiState
     private val _detailUiState = MutableStateFlow(DetailSurveyUiState())
+    init {
+        onLoadArgument(detail)
+    }
     /** Behaviors */
     private fun onLoadArgument(survey: SurveyItem) {
         _detailUiState.update { update -> update.copy(data = survey) }

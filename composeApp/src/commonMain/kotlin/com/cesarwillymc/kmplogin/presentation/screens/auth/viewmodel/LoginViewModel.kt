@@ -1,8 +1,8 @@
 package com.cesarwillymc.kmplogin.presentation.screens.auth.viewmodel
 
-import com.cesarwillymc.kmplogin.domain.usecase.auth.ForgotUseCase
 import com.cesarwillymc.kmplogin.domain.usecase.auth.SignInUseCase
 import com.cesarwillymc.kmplogin.domain.usecase.auth.entities.AuthParams
+import com.cesarwillymc.kmplogin.presentation.screens.auth.event.AuthEvent
 import com.cesarwillymc.kmplogin.presentation.screens.auth.state.AuthUiState
 import com.cesarwillymc.kmplogin.presentation.utils.viewModel.ViewModel
 import com.cesarwillymc.kmplogin.presentation.validations.field.EmailField
@@ -43,16 +43,16 @@ class LoginViewModel: ViewModel(), KoinComponent {
             ).let { result ->
                 when {
                     result.isSuccess -> {
+                        event.send(AuthEvent.IsSuccess)
                         authUiState.update { AuthUiState(isSuccess = true) }
                     }
 
                     result.isFailure -> {
-                        val messageError: String? = result.exceptionOrNull()?.message
+                        event.send(AuthEvent.IsFailure)
 
                         authUiState.update {
                             AuthUiState(
-                                isError = true,
-                                errorMessage = messageError
+                                isError = true
                             )
                         }
                     }

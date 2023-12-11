@@ -6,7 +6,4 @@ package com.cesarwillymc.kmplogin.presentation.navigation.event
  *
  * IOWA, United States.
  */
-interface SignInEvent {
-    fun navigateToHome()
-    fun navigateToForgotPassword()
-}
+ interface ForgotPasswordNavEvent : OnBackEvent

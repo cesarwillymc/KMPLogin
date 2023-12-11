@@ -21,6 +21,7 @@ const val TWO = 2
 const val TWO_F = 2f
 const val DELAY_700 = 700L
 const val DELAY_1000 = 1000L
+const val DELAY_1500 = 1500L
 const val DELAY_3000 = 3000
 const val DELAY_2500 = 2000L
 const val MIN_SEARCH_CHARACTERS = 3

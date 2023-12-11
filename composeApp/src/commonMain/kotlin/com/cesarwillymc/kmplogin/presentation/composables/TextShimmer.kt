@@ -1,12 +1,11 @@
 package com.cesarwillymc.kmplogin.presentation.composables
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import com.cesarwillymc.kmplogin.presentation.utils.kotlinExtension.shimmerLoadingAnimation
 
 /**
  * Created by Cesar Canaza on 11/16/23.
@@ -19,15 +18,9 @@ fun TextShimmer(
     modifier: Modifier
 ) {
     Box(
-        modifier = Modifier.clip(CircleShape)
+        modifier = modifier.clip(CircleShape).shimmerLoadingAnimation()
+
     ) {
-        Box(
-            modifier = modifier
-                .background(
-                    Color.White
-                )
-        ) {
-            // Todo
-        }
     }
 }
+

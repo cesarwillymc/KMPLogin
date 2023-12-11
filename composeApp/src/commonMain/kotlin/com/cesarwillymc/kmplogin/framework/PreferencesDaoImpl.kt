@@ -5,10 +5,10 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.cesarwillymc.kmplogin.data.sources.preferences.PreferencesDao
-import kotlinx.coroutines.flow.lastOrNull
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class PreferencesDaoImpl (
+class PreferencesDaoImpl(
     private val sharedPreferences: DataStore<Preferences>
 ) : PreferencesDao {
 
@@ -19,64 +19,40 @@ class PreferencesDaoImpl (
         const val USER_SESSION_REFRESH = "user_information_refresh"
     }
 
-    override suspend fun getToken(): Result<String> = try {
-        val session =
-            sharedPreferences.data.map { it[stringPreferencesKey(USER_SESSION)] }.lastOrNull()
-        Result.success(session.orEmpty())
-    } catch (e: Exception) {
-        Result.failure(e)
-    }
+    override suspend fun getToken(): Flow<String> =
+        sharedPreferences.data.map { it[stringPreferencesKey(USER_SESSION)].orEmpty() }
 
-    override suspend fun saveToken(value: String): Result<Unit> {
+    override suspend fun saveToken(value: String) {
         sharedPreferences.edit {
             it[stringPreferencesKey(USER_SESSION)] = value
         }
-        return Result.success(Unit)
     }
 
-    override suspend fun getTokenType(): Result<String> = try {
-        val session =
-            sharedPreferences.data.map { it[stringPreferencesKey(USER_SESSION_TYPE)] }.lastOrNull()
-        Result.success(session.orEmpty())
-    } catch (e: Exception) {
-        Result.failure(e)
-    }
+    override suspend fun getTokenType(): Flow<String> =
+        sharedPreferences.data.map { it[stringPreferencesKey(USER_SESSION_TYPE)].orEmpty() }
 
-    override suspend fun saveRefreshToken(value: String): Result<Unit> {
+    override suspend fun saveRefreshToken(value: String) {
         sharedPreferences.edit {
             it[stringPreferencesKey(USER_SESSION_REFRESH)] = value
         }
-        return Result.success(Unit)
     }
 
-    override suspend fun getRefreshToken(): Result<String> = try {
-        val session = sharedPreferences.data.map { it[stringPreferencesKey(USER_SESSION_REFRESH)] }
-            .lastOrNull()
-        Result.success(session.orEmpty())
-    } catch (e: Exception) {
-        Result.failure(e)
-    }
+    override suspend fun getRefreshToken(): Flow<String> =
+        sharedPreferences.data.map { it[stringPreferencesKey(USER_SESSION_REFRESH)].orEmpty() }
 
-    override suspend fun saveTokenType(value: String): Result<Unit> {
+    override suspend fun saveTokenType(value: String) {
         sharedPreferences.edit {
             it[stringPreferencesKey(USER_SESSION_TYPE)] = value
         }
-        return Result.success(Unit)
     }
 
-    override suspend fun getIsLogged(): Result<Boolean> = try {
-        val session =
-            sharedPreferences.data.map { it[stringPreferencesKey(USER_SESSION)] }.lastOrNull()
-        Result.success(session.isNullOrBlank())
-    } catch (e: Exception) {
-        Result.failure(e)
-    }
+    override suspend fun getIsLogged(): Flow<Boolean> =
+        sharedPreferences.data.map { it[stringPreferencesKey(USER_SESSION)].orEmpty().isNotEmpty() }
 
-    override suspend fun cleanPreferences(): Result<Unit> {
+    override suspend fun cleanPreferences() {
         sharedPreferences.edit {
             it.remove(stringPreferencesKey(USER_SESSION))
             it.remove(stringPreferencesKey(USER_SESSION_TYPE))
         }
-        return Result.success(Unit)
     }
 }

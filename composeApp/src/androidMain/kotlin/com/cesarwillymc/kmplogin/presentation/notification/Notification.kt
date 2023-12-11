@@ -39,11 +39,11 @@ fun Context.createNotificationChannel() {
     }
 }
 
-fun Context.showNotification() {
+fun Context.showNotification(title:String, description: String) {
     val builder = NotificationCompat.Builder(this, CHANNEL_ID)
         .setSmallIcon(R.drawable.baseline_notifications_24)
-        .setContentTitle(getString(R.string.lbl_check_email))
-        .setContentText(getString(R.string.desc_check_email))
+        .setContentTitle(title)
+        .setContentText(description)
         .setPriority(NotificationCompat.PRIORITY_HIGH)
         .setCategory(NotificationCompat.CATEGORY_CALL)
         .setColor(Color.BLACK)

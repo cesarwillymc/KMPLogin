@@ -8,9 +8,9 @@ import com.cesarwillymc.kmplogin.domain.usecase.survey.entities.SurveyList
  *
  * IOWA, United States.
  */
-data class HomeUiState(
-    val isLoading: Boolean = false,
-    val isError: Boolean = false,
-    val isSuccess: Boolean = false,
-    val data: SurveyList? = null
-)
+
+sealed class HomeUiState{
+    data object Loading: HomeUiState()
+    data class Success(val data: SurveyList?): HomeUiState()
+    data object Error: HomeUiState()
+}

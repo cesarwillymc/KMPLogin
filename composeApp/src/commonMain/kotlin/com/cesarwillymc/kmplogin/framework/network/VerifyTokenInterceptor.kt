@@ -6,8 +6,8 @@ import com.apollographql.apollo3.network.http.HttpInterceptor
 import com.apollographql.apollo3.network.http.HttpInterceptorChain
 import com.cesarwillymc.kmplogin.data.sources.preferences.PreferencesDao
 import com.cesarwillymc.kmplogin.domain.repository.AuthRepository
-import com.cesarwillymc.kmplogin.util.extension.orEmpty
 import io.ktor.http.HttpStatusCode
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -28,8 +28,8 @@ class VerifyTokenInterceptor(
     ): HttpResponse {
         var token = mutex.withLock {
             preferencesDao.let {
-                return@let it.getTokenType().getOrNull().orEmpty() + " " +
-                        it.getToken().getOrNull().orEmpty()
+                return@let it.getTokenType().first() + " " +
+                        it.getToken().first()
             }
         }
 

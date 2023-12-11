@@ -21,9 +21,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import com.cesarwillymc.kmplogin.SharedRes
 import com.cesarwillymc.kmplogin.presentation.theme.DimensionManager
+import com.cesarwillymc.kmplogin.presentation.theme.ImageType
 import com.cesarwillymc.kmplogin.presentation.theme.PaddingType
 import com.cesarwillymc.kmplogin.presentation.theme.TextColor
 import com.cesarwillymc.kmplogin.presentation.theme.Typography
+import com.cesarwillymc.kmplogin.presentation.theme.getImageSize
 import com.cesarwillymc.kmplogin.presentation.theme.getPadding
 import com.cesarwillymc.kmplogin.presentation.utils.DateFormat
 import com.cesarwillymc.kmplogin.util.constants.PATTERN_DAY_MONTH_DAY
@@ -74,7 +76,7 @@ fun ProfileCard(openDrawer: () -> Unit) {
             Image(
                 painter = painterResource(SharedRes.images.profile),
                 contentDescription = stringResource(SharedRes.strings.lbl_profile),
-                modifier = Modifier.size(DimensionManager.getPadding(PaddingType.Large)),
+                modifier = Modifier.size(DimensionManager.getImageSize(ImageType.IconMedium)),
                 contentScale = ContentScale.Crop
             )
         }
