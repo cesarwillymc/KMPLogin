@@ -1,7 +1,7 @@
 package com.cesarwillymc.kmplogin.domain.usecase.survey
 
-import com.cesarwillymc.kmplogin.domain.repository.SurveyRepository
 import com.cesarwillymc.kmplogin.domain.base.SuspendUseCase
+import com.cesarwillymc.kmplogin.domain.repository.SurveyRepository
 import com.cesarwillymc.kmplogin.domain.usecase.survey.entities.SurveyList
 import kotlinx.coroutines.CoroutineDispatcher
 

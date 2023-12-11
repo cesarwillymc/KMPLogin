@@ -12,9 +12,9 @@ import com.cesarwillymc.kmplogin.domain.usecase.auth.entities.Auth
 class AuthResultMapperImpl : AuthResultMapper {
     override fun fromResponseToDomain(info: AuthResponse): Auth {
         return Auth(
-            info.data.attributes.accessToken,
-            info.data.attributes.tokenType,
-            info.data.attributes.refreshToken
+            token = info.tokenData.attributes.accessToken,
+            tokenType = info.tokenData.attributes.tokenType,
+            refreshToken = info.tokenData.attributes.refreshToken
         )
     }
 }

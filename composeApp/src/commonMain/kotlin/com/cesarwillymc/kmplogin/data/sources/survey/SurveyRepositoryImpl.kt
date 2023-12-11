@@ -11,7 +11,7 @@ import com.cesarwillymc.kmplogin.domain.usecase.survey.entities.SurveyList
  *
  * IOWA, United States.
  */
-class SurveyRepositoryImpl constructor(
+class SurveyRepositoryImpl(
     private val surveyRemoteDataSource: SurveyRemoteDataSource,
     private val mapper: SurveyMapper
 ) : SurveyRepository {

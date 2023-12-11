@@ -1,7 +1,7 @@
 package com.cesarwillymc.kmplogin.domain.usecase.auth
 
-import com.cesarwillymc.kmplogin.domain.repository.AuthRepository
 import com.cesarwillymc.kmplogin.domain.base.SuspendUseCase
+import com.cesarwillymc.kmplogin.domain.repository.AuthRepository
 import kotlinx.coroutines.CoroutineDispatcher
 
 /**

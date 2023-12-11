@@ -23,7 +23,7 @@ class NoUserInterceptor private constructor(configuration: Configuration) {
         var queryParamSecret: String = EMPTY_STRING
     }
 
-    public companion object Plugin : HttpClientPlugin<Configuration, NoUserInterceptor> {
+    companion object Plugin : HttpClientPlugin<Configuration, NoUserInterceptor> {
         override val key: AttributeKey<NoUserInterceptor>
             get() = AttributeKey("NoUserInterceptor")
 

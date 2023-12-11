@@ -24,7 +24,6 @@ fun CustomSnackbar(snackBarHostState: SnackbarHostState) {
         SnackbarHost(
             hostState = snackBarHostState,
             modifier = Modifier.align(Alignment.BottomCenter)
-                .padding(WindowInsets.ime.asPaddingValues())
         )
     }
 }

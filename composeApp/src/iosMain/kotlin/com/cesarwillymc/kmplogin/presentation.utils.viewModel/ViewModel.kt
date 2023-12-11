@@ -1,11 +1,12 @@
 package com.cesarwillymc.kmplogin.presentation.utils.viewModel
 
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.channels.Channel
 
 /**
  * Created by Cesar Canaza on 12/4/23.
@@ -21,4 +22,5 @@ actual open class ViewModel : InstanceKeeper.Instance, CoroutineScope {
 
     actual val viewModelScope: CoroutineScope
         get() = CoroutineScope(coroutineContext)
+    actual val event: Channel<BaseEvent?> =  Channel(Channel.BUFFERED)
 }

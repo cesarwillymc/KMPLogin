@@ -40,6 +40,7 @@ fun NavigationGraph(
                     event = instance.component
                 )
 
+
                 is RootComponent.Child.Detail -> DetailSurveyScreen(
                     event = instance.component,
                     detail = instance.component.survey

@@ -58,7 +58,7 @@ class RootComponent(componentContext: ComponentContext) : ComponentContext by co
 
         }
     }
-
+    @Serializable
     sealed class Child(val componentContext: ComponentContext) {
         data class Splash(val component: SplashComponent) : Child(component)
         data class SignIn(val component: SignInComponent) : Child(component)
@@ -72,6 +72,7 @@ class RootComponent(componentContext: ComponentContext) : ComponentContext by co
         data object Splash : Configuration()
         data object SignIn : Configuration()
         data object ForgotPassword : Configuration()
+        @Serializable
         data object Home : Configuration()
         data class Detail(val survey: SurveyItem) : Configuration()
 

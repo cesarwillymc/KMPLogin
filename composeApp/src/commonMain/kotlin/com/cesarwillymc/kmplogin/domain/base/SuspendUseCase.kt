@@ -1,5 +1,6 @@
 package com.cesarwillymc.kmplogin.domain.base
 
+import com.cesarwillymc.kmplogin.util.constants.LOG_DOMAIN
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
@@ -22,7 +23,7 @@ abstract class SuspendUseCase<in Params, out Results>(
                 execute(parameters)
             }
         } catch (e: Exception) {
-//            Log.e(LOG_DOMAIN, e.message.toString())
+            println("$LOG_DOMAIN:  "+e.message.toString())
             Result.failure(e)
         }
     }

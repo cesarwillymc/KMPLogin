@@ -43,21 +43,23 @@ class LoginViewModel: ViewModel(), KoinComponent {
             ).let { result ->
                 when {
                     result.isSuccess -> {
-                        event.send(AuthEvent.IsSuccess)
                         authUiState.update { AuthUiState(isSuccess = true) }
+                        event.send(AuthEvent.IsSuccess)
                     }
 
                     result.isFailure -> {
-                        event.send(AuthEvent.IsFailure)
+
 
                         authUiState.update {
                             AuthUiState(
                                 isError = true
                             )
                         }
+                        event.send(AuthEvent.IsFailure)
                     }
                 }
             }
         }
     }
+
 }

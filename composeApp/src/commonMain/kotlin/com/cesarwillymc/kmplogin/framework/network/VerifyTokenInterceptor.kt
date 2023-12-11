@@ -32,7 +32,6 @@ class VerifyTokenInterceptor(
                         it.getToken().first()
             }
         }
-
         val response =
             chain.proceed(request.newBuilder().addHeader(HEADER_PARAM_NAME, token).build())
         return if (response.statusCode == HttpStatusCode.Unauthorized.value && userData.getOrNull() == true) {

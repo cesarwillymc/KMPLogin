@@ -11,7 +11,8 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class AuthResponse(
-    val data: TokenData
+    @SerialName("data")
+    val tokenData: TokenData
 )
 @Serializable
 data class TokenData(

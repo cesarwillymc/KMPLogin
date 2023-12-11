@@ -112,7 +112,6 @@ fun MyBasicColumn(
 
                 // Record the y co-ord placed up to
                 yPosition += placeable.width
-                println("textview: " + placeable.width)
             }
         }
     }

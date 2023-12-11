@@ -14,10 +14,13 @@ expect object DimensionManager
 
 @Composable
 expect fun DimensionManager.getTextSize(textType: TextType): TextUnit
+
 @Composable
 expect fun DimensionManager.getPadding(paddingType: PaddingType): Dp
+
 @Composable
 expect fun DimensionManager.getImageSize(imageType: ImageType): Dp
+
 @Composable
 expect fun DimensionManager.getOtherSize(otherType: OtherSizeType): Dp
 
@@ -39,7 +42,12 @@ enum class PaddingType {
 enum class ImageType {
     IconSmall,
     IconMedium,
-    IconLarge, IconExtraLarge, ImageSmall, ImageMedium, ImageLarge, ImageExtraLarge
+    IconLarge,
+    IconExtraLarge,
+    ImageSmall,
+    ImageMedium,
+    ImageLarge,
+    ImageExtraLarge
 }
 
 enum class OtherSizeType {

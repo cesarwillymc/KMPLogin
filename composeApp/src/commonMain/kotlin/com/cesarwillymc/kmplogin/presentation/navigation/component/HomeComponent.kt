@@ -5,6 +5,7 @@ import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.router.stack.pushNew
+import com.arkivanov.decompose.router.stack.replaceAll
 import com.cesarwillymc.kmplogin.domain.usecase.survey.entities.SurveyItem
 import com.cesarwillymc.kmplogin.presentation.navigation.RootComponent
 import com.cesarwillymc.kmplogin.presentation.navigation.event.HomeNavEvent
@@ -19,12 +20,12 @@ class HomeComponent(
     componentContext: ComponentContext,
     private val navigation: StackNavigation<RootComponent.Configuration>
 ) : ComponentContext by componentContext, HomeNavEvent {
-    @OptIn(ExperimentalDecomposeApi::class)
+
     override fun navigateToDetail(surveyItem: SurveyItem) {
         navigation.pushNew(configuration = RootComponent.Configuration.Detail(surveyItem))
     }
 
     override fun navigateToSignIn() {
-        navigation.push(configuration = RootComponent.Configuration.SignIn)
+        navigation.replaceAll(RootComponent.Configuration.SignIn)
     }
 }

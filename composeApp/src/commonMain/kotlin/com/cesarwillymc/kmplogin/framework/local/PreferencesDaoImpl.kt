@@ -1,4 +1,4 @@
-package com.cesarwillymc.kmplogin.framework
+package com.cesarwillymc.kmplogin.framework.local
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

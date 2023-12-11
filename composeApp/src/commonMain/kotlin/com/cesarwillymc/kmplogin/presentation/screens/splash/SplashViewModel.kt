@@ -1,7 +1,6 @@
 package com.cesarwillymc.kmplogin.presentation.screens.splash
 
 import com.cesarwillymc.kmplogin.domain.usecase.auth.GetLoggedStateUseCase
-import com.cesarwillymc.kmplogin.domain.usecase.survey.GetSurveysUseCase
 import com.cesarwillymc.kmplogin.presentation.utils.viewModel.ViewModel
 import com.cesarwillymc.kmplogin.util.extension.orEmpty
 import kotlinx.coroutines.flow.MutableStateFlow

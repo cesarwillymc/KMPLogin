@@ -18,7 +18,7 @@ import com.cesarwillymc.kmplogin.domain.usecase.auth.GetLoggedStateUseCase
 import com.cesarwillymc.kmplogin.domain.usecase.auth.LogoutUseCase
 import com.cesarwillymc.kmplogin.domain.usecase.auth.SignInUseCase
 import com.cesarwillymc.kmplogin.domain.usecase.survey.GetSurveysUseCase
-import com.cesarwillymc.kmplogin.framework.PreferencesDaoImpl
+import com.cesarwillymc.kmplogin.framework.local.PreferencesDaoImpl
 import com.cesarwillymc.kmplogin.framework.network.AuthRemoteDataSourceImpl
 import com.cesarwillymc.kmplogin.framework.network.NoUserInterceptor
 import com.cesarwillymc.kmplogin.framework.network.VerifyTokenInterceptor

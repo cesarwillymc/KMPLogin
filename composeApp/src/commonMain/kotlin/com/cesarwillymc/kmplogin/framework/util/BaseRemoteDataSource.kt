@@ -1,5 +1,6 @@
 package com.cesarwillymc.kmplogin.framework.util
 
+import com.cesarwillymc.kmplogin.util.constants.LOG_DOMAIN
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.RedirectResponseException
 import io.ktor.client.plugins.ServerResponseException

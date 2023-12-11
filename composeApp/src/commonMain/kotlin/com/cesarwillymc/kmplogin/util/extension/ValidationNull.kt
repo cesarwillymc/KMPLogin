@@ -17,7 +17,6 @@ fun Float?.orEmpty(): Float = this ?: ZERO_F
 
 fun String?.orEmpty(): String = this ?: EMPTY_STRING
 
-inline fun <reified T> List<T>?.orEmpty(): List<T> = this ?: listOf<T>()
 
 inline fun <reified T> T?.ifNotNull(crossinline block: (T) -> Unit) {
     if (this != null) {

@@ -1,12 +1,12 @@
 package com.cesarwillymc.kmplogin.framework.network
 
-import com.cesarwillymc.kmplogin.framework.util.BaseRemoteDataSource
 import com.cesarwillymc.kmplogin.data.sources.auth.entities.AuthRequest
 import com.cesarwillymc.kmplogin.data.sources.auth.entities.AuthResponse
 import com.cesarwillymc.kmplogin.data.sources.auth.entities.ForgotPasswordRequest
 import com.cesarwillymc.kmplogin.data.sources.auth.entities.LogoutRequest
 import com.cesarwillymc.kmplogin.data.sources.auth.entities.RefreshTokenRequest
 import com.cesarwillymc.kmplogin.data.sources.auth.remote.AuthRemoteDataSource
+import com.cesarwillymc.kmplogin.framework.util.BaseRemoteDataSource
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.post
