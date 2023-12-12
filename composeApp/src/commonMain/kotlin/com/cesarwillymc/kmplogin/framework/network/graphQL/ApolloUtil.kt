@@ -10,8 +10,8 @@ import com.cesarwillymc.kmplogin.framework.network.resApi.interceptor.VerifyToke
  *
  * IOWA, United States.
  */
-internal fun getApolloInstance(httpInterceptor: HttpInterceptor, url:String){
-    ApolloClient.Builder()
+internal fun getApolloInstance(httpInterceptor: HttpInterceptor, url:String): ApolloClient {
+    return ApolloClient.Builder()
         .serverUrl(url)
         .addHttpInterceptor(httpInterceptor)
         .build()

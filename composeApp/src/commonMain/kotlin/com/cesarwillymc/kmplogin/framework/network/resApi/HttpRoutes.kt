@@ -1,5 +1,7 @@
 package com.cesarwillymc.kmplogin.framework.network.resApi
 
+import com.cesarwillymc.kmplogin.presentation.utils.SecretsProvider
+
 /**
  * Created by Cesar Canaza on 12/7/23.
  * cesarwilly.mc@gmail.com
@@ -7,11 +9,12 @@ package com.cesarwillymc.kmplogin.framework.network.resApi
  * IOWA, United States.
  */
 object HttpRoutes {
-    private const val BASE_URL = "https://survey-api.nimblehq.co"
+    private val BASE_URL = SecretsProvider().getBaseUrl()
+
     object Auth {
-        const val LOGIN = "$BASE_URL/api/v1/oauth/token"
-        const val LOGOUT = "$BASE_URL/api/v1/oauth/revoke"
-        const val REFRESH = "$BASE_URL/api/v1/oauth/token"
-        const val FORGOT = "$BASE_URL/api/v1/passwords"
+        val LOGIN = "$BASE_URL/api/v1/oauth/token"
+        val LOGOUT = "$BASE_URL/api/v1/oauth/revoke"
+        val REFRESH = "$BASE_URL/api/v1/oauth/token"
+        val FORGOT = "$BASE_URL/api/v1/passwords"
     }
 }

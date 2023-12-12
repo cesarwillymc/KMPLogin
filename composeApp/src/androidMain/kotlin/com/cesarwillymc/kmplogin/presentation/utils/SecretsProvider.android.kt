@@ -33,8 +33,26 @@ actual class SecretsProvider actual constructor() {
 }
 internal fun getLocalPropertyValue(name:String): String {
     val properties = Properties()
-    val localPropertiesFile = File("../local.properties")
-    val inputStream = localPropertiesFile.inputStream()
-    properties.load(inputStream)
-    return properties.getProperty(name).orEmpty()
+
+    // Get the current working directory
+    val currentDir = System.getProperty("user.dir")
+
+    // Navigate to the parent directory
+    val parentDir = currentDir?.let { File(it).parentFile }
+
+    // Construct the path to local.properties
+    val localPropertiesFile = File(parentDir, "local.properties")
+
+    if (localPropertiesFile.exists()) {
+        // Load properties if the file exists
+        val inputStream = localPropertiesFile.inputStream()
+        properties.load(inputStream)
+        val data = properties.getProperty(name).orEmpty()
+        println("RESOURCEAAA $name: $data")
+        return data
+    } else {
+        println("Local properties file does not exist.")
+        // Handle the case when the file does not exist.
+        return ""
+    }
 }

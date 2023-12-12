@@ -13,6 +13,7 @@ import kotlinx.serialization.json.Json
  * IOWA, United States.
  */
 internal fun getKtorInstance(clientId: String, secret: String): HttpClient {
+    println("client: $clientId and  $secret")
     return HttpClient {
         install(ContentNegotiation) {
             json(

@@ -110,8 +110,9 @@ val koinFrameworks = module {
         )
     }
     single { VerifyTokenInterceptor(get(), get()) }
+    single { SecretsProvider() }
     single {
         getApolloInstance(get<VerifyTokenInterceptor>(), get<SecretsProvider>().getBaseUrlGraphQL())
     }
-    single { SecretsProvider() }
+
 }

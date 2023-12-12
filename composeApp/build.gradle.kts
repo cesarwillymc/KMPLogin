@@ -104,7 +104,11 @@ kotlin {
     }
 
 }
+private val localProperties =
+    com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir)
 
+fun getLocalProperty(key: String, defaultValue: String = ""): String =
+    localProperties.getProperty(key, System.getenv(key) ?: defaultValue)
 android {
     namespace = libs.versions.android.namespace.get()
     compileSdk = libs.versions.android.compileSdk.get().toInt()
@@ -133,10 +137,30 @@ android {
 
         }
     }
-
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("../keystore/debug/keystore.debug")
+            keyAlias = "debugKey"
+            keyPassword = getLocalProperty("DEBUG_KEY_PASSWORD")
+            storePassword = getLocalProperty("DEBUG_KEY_PASSWORD")
+        }
+    }
     buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
+        release {
+            signingConfig = signingConfigs.getByName("debug")
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+        debug {
+            signingConfig = signingConfigs.getByName("debug")
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
