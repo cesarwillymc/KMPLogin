@@ -58,4 +58,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: app-${{ github.ref == 'refs/heads/main' && 'release' || 'debug' }}
-          path: app/build/outputs/apk/${{ github.ref == 'refs/heads/main' && 'release' || 'debug' }}/app-${{ github.ref == 'refs/heads/main' && 'release' || 'debug' }}.apk
+          path: composeApp/build/outputs/apk/${{ github.ref == 'refs/heads/main' && 'release' || 'debug' }}/composeApp-${{ github.ref == 'refs/heads/main' && 'release' || 'debug' }}.apk
