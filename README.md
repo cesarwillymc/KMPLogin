@@ -6,7 +6,13 @@
 Mobile developer willing to learn old and new technologies, I like the team work and communication.
 Thank you for check this project.
 
-- <img src="image/recording.gif" width="250" align="center" hspace="20">
+## Kotlin Multiplatform Jetpack Compose
+
+| Android                                                                                                                   | iOS                                                                                                               |
+|---------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| [![Android Video](https://github.com/cesarwillymc/KMPLogin/blob/main/image/androidapp.png)](https://youtu.be/Zs0ULdlJ0OI) | [![iOS Video](https://github.com/cesarwillymc/KMPLogin/blob/main/image/iosapp.png)](https://youtu.be/B-Z1Gtk-y-8) |
+
+
 
 ## Module Architecture
 
@@ -20,6 +26,7 @@ Thank you for check this project.
 * `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
   you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
 
+- <img src="image/cleandiagram.png" width="80%" align="center" hspace="20">
 
 
 ## Architecture MVVM with clean
@@ -99,9 +106,9 @@ Go to **Gradle JDK** and change to **Java17**
 
 ### DOWNLOAD APP
 ## Download the app by Google Drive
-- [GOOGLE DRIVE](https://drive.google.com/drive/folders/1ooIac0de2HlyxdFreRy6ydY5dr3QnSXK?usp=sharing)
+- [GOOGLE DRIVE](https://drive.google.com/drive/folders/1_hQUdqUJ88wDag87t5jfIcgUmh4aFTGI?usp=sharing)
 ## Download the app by artifact github
-Go to [Here](https://github.com/cesarwillymc/MBCGroup/actions)
+Go to [Here](https://github.com/cesarwillymc/KMPLogin/actions)
 - ![APK](image/artifact.png)  
   Later select the first workflow and download the apk
 - ![APK](image/app.png)
