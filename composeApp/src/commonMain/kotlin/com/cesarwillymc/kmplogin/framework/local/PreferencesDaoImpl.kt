@@ -4,7 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.cesarwillymc.kmplogin.data.sources.preferences.PreferencesDao
+import com.cesarwillymc.kmplogin.data.preferences.PreferencesDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

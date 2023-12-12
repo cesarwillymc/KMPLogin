@@ -2,6 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>SHARED_PREFERENCES_NAME</key>
+	<string>DKMPlO</string>
+	<key>CLIENT_SECRET</key>
+	<string>lMQb900L-mTeU-FVTCwyhjsfBwRCxwwbCitPob96cuU</string>
+	<key>CLIENT_ID</key>
+	<string>ofzl-2h5ympKa0WqqTzqlVJUiRsxmXQmt5tkgrlWnOE</string>
+	<key>BASE_URL_GQL</key>
+	<string>https://survey-api.nimblehq.co/graphql</string>
+	<key>BASE_URL</key>
+	<string>https://survey-api.nimblehq.co</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>

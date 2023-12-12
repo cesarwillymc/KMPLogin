@@ -1,16 +1,15 @@
 package com.cesarwillymc.kmplogin.di
 
-import com.apollographql.apollo3.ApolloClient
-import com.cesarwillymc.kmplogin.data.sources.auth.AuthRepositoryImpl
-import com.cesarwillymc.kmplogin.data.sources.auth.mapper.AuthResultMapper
-import com.cesarwillymc.kmplogin.data.sources.auth.mapper.AuthResultMapperImpl
-import com.cesarwillymc.kmplogin.data.sources.auth.remote.AuthRemoteDataSource
-import com.cesarwillymc.kmplogin.data.sources.preferences.PreferencesDao
-import com.cesarwillymc.kmplogin.data.sources.survey.SurveyRepositoryImpl
-import com.cesarwillymc.kmplogin.data.sources.survey.mapper.SurveyMapper
-import com.cesarwillymc.kmplogin.data.sources.survey.mapper.SurveyMapperImpl
-import com.cesarwillymc.kmplogin.data.sources.survey.remote.SurveyRemoteDataSource
-import com.cesarwillymc.kmplogin.data.sources.survey.remote.SurveyRemoteDataSourceImpl
+import com.cesarwillymc.kmplogin.data.auth.AuthRepositoryImpl
+import com.cesarwillymc.kmplogin.data.auth.mapper.AuthResultMapper
+import com.cesarwillymc.kmplogin.data.auth.mapper.AuthResultMapperImpl
+import com.cesarwillymc.kmplogin.data.auth.remote.AuthRemoteDataSource
+import com.cesarwillymc.kmplogin.data.preferences.PreferencesDao
+import com.cesarwillymc.kmplogin.data.survey.SurveyRepositoryImpl
+import com.cesarwillymc.kmplogin.data.survey.mapper.SurveyMapper
+import com.cesarwillymc.kmplogin.data.survey.mapper.SurveyMapperImpl
+import com.cesarwillymc.kmplogin.data.survey.remote.SurveyRemoteDataSource
+import com.cesarwillymc.kmplogin.data.survey.remote.SurveyRemoteDataSourceImpl
 import com.cesarwillymc.kmplogin.domain.repository.AuthRepository
 import com.cesarwillymc.kmplogin.domain.repository.SurveyRepository
 import com.cesarwillymc.kmplogin.domain.usecase.auth.ForgotUseCase
@@ -19,17 +18,16 @@ import com.cesarwillymc.kmplogin.domain.usecase.auth.LogoutUseCase
 import com.cesarwillymc.kmplogin.domain.usecase.auth.SignInUseCase
 import com.cesarwillymc.kmplogin.domain.usecase.survey.GetSurveysUseCase
 import com.cesarwillymc.kmplogin.framework.local.PreferencesDaoImpl
-import com.cesarwillymc.kmplogin.framework.network.AuthRemoteDataSourceImpl
-import com.cesarwillymc.kmplogin.framework.network.NoUserInterceptor
-import com.cesarwillymc.kmplogin.framework.network.VerifyTokenInterceptor
-import com.cesarwillymc.kmplogin.framework.util.CoroutinesModule
+import com.cesarwillymc.kmplogin.framework.network.graphQL.getApolloInstance
+import com.cesarwillymc.kmplogin.framework.network.resApi.AuthRemoteDataSourceImpl
+import com.cesarwillymc.kmplogin.framework.network.resApi.getKtorInstance
+import com.cesarwillymc.kmplogin.framework.network.resApi.interceptor.VerifyTokenInterceptor
+import com.cesarwillymc.kmplogin.presentation.utils.SecretsProvider
+import com.cesarwillymc.kmplogin.util.CoroutinesModule
 import io.ktor.client.HttpClient
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
-import kotlinx.serialization.json.Json
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -106,27 +104,14 @@ expect val platformModule: Module
 
 val koinFrameworks = module {
     single<HttpClient> {
-        HttpClient {
-            install(ContentNegotiation) {
-                json(
-                    Json {
-                        ignoreUnknownKeys = true
-                        useAlternativeNames = false
-                        encodeDefaults = true
-                    }
-                )
-            }
-            install(NoUserInterceptor) {
-                queryParamId = "ofzl-2h5ympKa0WqqTzqlVJUiRsxmXQmt5tkgrlWnOE"
-                queryParamSecret = "lMQb900L-mTeU-FVTCwyhjsfBwRCxwwbCitPob96cuU"
-            }
-        }
+        getKtorInstance(
+            get<SecretsProvider>().getClientId(),
+            get<SecretsProvider>().getClientSecret()
+        )
     }
-    single { VerifyTokenInterceptor(get(),get()) }
+    single { VerifyTokenInterceptor(get(), get()) }
     single {
-        ApolloClient.Builder()
-            .serverUrl("https://survey-api.nimblehq.co/graphql")
-            .addHttpInterceptor(get<VerifyTokenInterceptor>())
-            .build()
+        getApolloInstance(get<VerifyTokenInterceptor>(), get<SecretsProvider>().getBaseUrlGraphQL())
     }
+    single { SecretsProvider() }
 }
