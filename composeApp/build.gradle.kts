@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.pluginGraphql)
     id("dev.icerock.mobile.multiplatform-resources")
     id("kotlin-parcelize")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 apollo {
@@ -126,6 +127,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()

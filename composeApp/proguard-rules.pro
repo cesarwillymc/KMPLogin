@@ -45,9 +45,4 @@
 -keep class com.cesarwillymc.kmplogin.domain.usecase.auth.entities.** { *; }
 -keep class com.cesarwillymc.kmplogin.domain.usecase.survey.entities.** { *; }
 -keep class com.cesarwillymc.kmplogin.presentation.validations.common.** { *; }
--keep class com.cesarwillymc.kmplogin.presentation.utils.** { *; }
--keep class com.cesarwillymc.kmplogin.di.** { *; }
--keep class com.cesarwillymc.kmplogin.framework.** { *; }
--keep class com.cesarwillymc.kmplogin.presentation.utils.SecretsProvider.** { *; }
--keep class com.cesarwillymc.kmplogin.presentation.utils.SecretsProvider_androidKt.** { *; }
--keepdirectories res/raw/local.properties
+

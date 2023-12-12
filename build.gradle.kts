@@ -9,8 +9,10 @@ plugins {
     alias(libs.plugins.pluginGraphql).apply(false)
 
 }
-buildscript{
-    dependencies{
-        classpath("dev.icerock.moko:resources-generator:0.23.0")
+buildscript {
+    dependencies {
+        classpath(libs.resources.generator)
+        classpath(libs.secrets.gradle.plugin)
+
     }
 }

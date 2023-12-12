@@ -8,6 +8,11 @@ import platform.Foundation.NSBundle
  *
  * IOWA, United States.
  */
+private const val LP_BASE_URL = "BASE_URL"
+private const val LP_BASE_URL_GQL = "BASE_URL_GQL"
+private const val LP_CLIENT_ID = "CLIENT_ID"
+private const val LP_CLIENT_SECRET = "CLIENT_SECRET"
+private const val LP_SHARED_PREFERENCES_NAME = "SHARED_PREFERENCES_NAME"
 
 actual class SecretsProvider actual constructor() {
 

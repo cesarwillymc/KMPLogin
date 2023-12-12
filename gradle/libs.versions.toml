@@ -36,6 +36,7 @@ dateTime ="0.4.1"
 lottie = "4.2.0"
 moko = "0.23.0"
 mokoGraphics ="0.9.0"
+secrets ="2.0.1"
 [libraries]
 essenty_parcelable = {module = "com.arkivanov.essenty:parcelable", version.ref = "essenty"}
 kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamelImage" }
@@ -66,6 +67,8 @@ android-lottie = {module="com.airbnb.android:lottie-compose", version.ref="lotti
 moko-compose = {module="dev.icerock.moko:resources-compose",version.ref="moko"}
 moko-resources = {module="dev.icerock.moko:resources",version.ref="moko"}
 moko-graphics = {module="dev.icerock.moko:graphics",version.ref="mokoGraphics"}
+resources-generator = { module = "dev.icerock.moko:resources-generator", version.ref = "moko" }
+secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secrets" }
 [plugins]
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -75,3 +78,4 @@ kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", versio
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 pluginGraphql = { id = "com.apollographql.apollo3", version.ref = "apollo" }
+googleSecrets = { id= "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref ="secrets"}
